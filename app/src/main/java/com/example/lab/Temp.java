@@ -1,5 +1,6 @@
 package com.example.lab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,28 +39,8 @@ public class Temp extends AppCompatActivity {
         b= findViewById(R.id.button5);
         tv1 = findViewById(R.id.textView17);
         tv2= findViewById(R.id.textView18);
-        databaseReference = FirebaseDatabase.getInstance().getReference("TestDetails");
-        Query query = databaseReference.child("TestDetails");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot ds : dataSnapshot.getChildren())
-                {
-                    Map map = (Map) ds.getValue();
-                    String n = map.get("Name").toString();
-                    String p = map.get("Details").toString();
-                    tv1.setText(n);
-                    tv2.setText(p);
 
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,8 +54,9 @@ public class Temp extends AppCompatActivity {
                 category = findViewById(R.id.editText5);
                 price = findViewById(R.id.editText6);
                 testCode = findViewById(R.id.editText7);
+               // databaseReference = FirebaseDatabase.getInstance().getReference("TestDetails");
+/*
                 databaseReference = firebaseDatabase.getReference();
-
                 String Name = name.getText().toString().trim();
                 String Details = details.getText().toString().trim();
                 String PreTestInfo = preTestInfo.getText().toString().trim();
@@ -96,9 +78,9 @@ public class Temp extends AppCompatActivity {
                 price.setText("");
                 Toast.makeText(getApplicationContext(),"Data added ",Toast.LENGTH_LONG).show();
 
-
-                //Intent in = new Intent(getApplicationContext(),TestsDetails.class);
-                //startActivity(in);
+*/
+                Intent in = new Intent(getApplicationContext(),TestsDetails.class);
+                startActivity(in);
             }
         });
 
