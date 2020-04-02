@@ -8,6 +8,39 @@ public class Test {
     String PreTestInformation;
     String ReportAvailability;
     String TestUsuage;
+
+    public void setTestCode(String testCode) {
+        TestCode = testCode;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public void setDetails(String details) {
+        Details = details;
+    }
+
+    public void setPreTestInformation(String preTestInformation) {
+        PreTestInformation = preTestInformation;
+    }
+
+    public void setReportAvailability(String reportAvailability) {
+        ReportAvailability = reportAvailability;
+    }
+
+    public void setTestUsuage(String testUsuage) {
+        TestUsuage = testUsuage;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
+    }
+
+    public void setPrice(String price) {
+        Price = price;
+    }
+
     String Category;
     String Price;
 
