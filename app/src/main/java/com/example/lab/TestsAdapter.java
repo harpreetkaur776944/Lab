@@ -55,7 +55,7 @@ public class TestsAdapter extends RecyclerView.Adapter<TestsAdapter.ViewHolder>{
     }
 
     public class ViewHolder extends  RecyclerView.ViewHolder{
-        TextView name,details;
+        TextView name,details,cartPrice;
         Button readmore;
 
         public ViewHolder(@NonNull View view) {

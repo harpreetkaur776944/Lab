@@ -46,17 +46,17 @@ public class Temp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                name = findViewById(R.id.editText);
-                details = findViewById(R.id.editText2);
-                preTestInfo = findViewById(R.id.editText3);
-                reportAvailable = findViewById(R.id.editText3);
-                testUsuage = findViewById(R.id.editText4);
-                category = findViewById(R.id.editText5);
-                price = findViewById(R.id.editText6);
-                testCode = findViewById(R.id.editText7);
-               // databaseReference = FirebaseDatabase.getInstance().getReference("TestDetails");
-/*
-                databaseReference = firebaseDatabase.getReference();
+                name = findViewById(R.id.editText2);
+                details = findViewById(R.id.editText3);
+                preTestInfo = findViewById(R.id.editText4);
+                reportAvailable = findViewById(R.id.editText5);
+                testUsuage = findViewById(R.id.editText6);
+                category = findViewById(R.id.editText7);
+                price = findViewById(R.id.editText8);
+                testCode = findViewById(R.id.editText);
+               /* databaseReference = FirebaseDatabase.getInstance().getReference("TestDetails");
+
+               // databaseReference = firebaseDatabase.getReference();
                 String Name = name.getText().toString().trim();
                 String Details = details.getText().toString().trim();
                 String PreTestInfo = preTestInfo.getText().toString().trim();
@@ -77,8 +77,8 @@ public class Temp extends AppCompatActivity {
                 category.setText("");
                 price.setText("");
                 Toast.makeText(getApplicationContext(),"Data added ",Toast.LENGTH_LONG).show();
-
 */
+
                 Intent in = new Intent(getApplicationContext(),TestsDetails.class);
                 startActivity(in);
             }

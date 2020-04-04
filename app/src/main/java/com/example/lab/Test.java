@@ -8,6 +8,10 @@ public class Test {
     String PreTestInformation;
     String ReportAvailability;
     String TestUsuage;
+    String Category;
+    String Price;
+    String Type;
+    String Offer;
 
     public void setTestCode(String testCode) {
         TestCode = testCode;
@@ -41,13 +45,26 @@ public class Test {
         Price = price;
     }
 
-    String Category;
-    String Price;
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    public String getOffer() {
+        return Offer;
+    }
+
+    public void setOffer(String offer) {
+        Offer = offer;
+    }
 
     public Test() {
     }
 
-    public Test(String testCode, String name, String details, String preTestInformation, String reportAvailability, String testUsuage, String category, String price) {
+    public Test(String testCode, String name, String details, String preTestInformation, String reportAvailability, String testUsuage, String category, String price, String type, String offer) {
         TestCode = testCode;
         Name = name;
         Details = details;
@@ -56,6 +73,8 @@ public class Test {
         TestUsuage = testUsuage;
         Category = category;
         Price = price;
+        Type = type;
+        Offer = offer;
     }
 
     public String getName() {

@@ -19,7 +19,7 @@ import java.util.List;
 
 public class SelectTestCart extends AppCompatActivity {
 
-    private static final String DATABASE_PATH_UPLOADS = "TestDetails";
+    private static final String DATABASE_PATH_UPLOADS = "TestDetails/TestDetails";
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     DatabaseReference databaseReference;

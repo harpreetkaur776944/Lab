@@ -2,6 +2,7 @@ package com.example.lab;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class TestsDetails extends AppCompatActivity {
     DatabaseReference databaseReference;
     List<Test> testList ;
     ProgressDialog progressDialog;
+    TextView cartPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class TestsDetails extends AppCompatActivity {
 
         testList = new ArrayList<>();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("TestDetails");
+        databaseReference = FirebaseDatabase.getInstance().getReference("TestDetails/TestDetails");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -53,6 +55,9 @@ public class TestsDetails extends AppCompatActivity {
                 }
                 adapter = new TestsAdapter(getApplicationContext(), testList);
                 recyclerView.setAdapter(adapter);
+                cartPrice = findViewById(R.id.textView19);
+
+                cartPrice.setText(cartPrice.getText()+" 0.0");
 
             }
             @Override

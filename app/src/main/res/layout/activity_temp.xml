@@ -34,63 +34,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="test code"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="Name of the test"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editText3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="Details"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editText4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="Pre test Info"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editText5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="report"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editText6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="est usage"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editText7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="category"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editText8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="price"
+            android:inputType="textPersonName" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
