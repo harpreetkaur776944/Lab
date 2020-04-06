@@ -109,7 +109,7 @@ public class Login extends AppCompatActivity {
     private void check()
     {
 
-        String username = email.getText().toString().trim();
+        final String username = email.getText().toString().trim();
         String pass = password.getText().toString().trim();
 
         if(username.isEmpty())
