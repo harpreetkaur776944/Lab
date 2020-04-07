@@ -39,7 +39,7 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
     String code;
     String price;
     String url;
-
+  static  List<CartItems> cartItemsList = new ArrayList<>();
     public SelectTestCartAdapter(Context context, List<Test> testList) {
         this.context = context;
         this.testList = testList;
@@ -66,7 +66,7 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
         holder.price.setText(holder.price.getText()+" "+test.getPrice());
         holder.addedToCart.setText("Added to cart");
 
-        final List<CartItems> cartItemsList = new ArrayList<>();
+
         getCurrentUrl();
 
         DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("CartList").child(url).child("Products");
@@ -92,6 +92,7 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
                         if (cart.getItemCode().equals(code)) {
                             holder.addedToCart.setText("Added To Cart");
                             holder.addToCart.setVisibility(View.GONE);
+                            break;
                         } else {
                             holder.addedToCart.setText("");
                             holder.addToCart.setOnClickListener(new View.OnClickListener() {
