@@ -2,12 +2,16 @@ package com.example.lab;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,8 +39,6 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
     String code;
     String price;
     String url;
-    List<CartItems> cartItemsList;
-
 
     public SelectTestCartAdapter(Context context, List<Test> testList) {
         this.context = context;
@@ -54,27 +56,65 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Test test = testList.get(position);
-
         code = test.getTestCode();
         price = test.getPrice();
-
-
         holder.testName.setText(test.getName());
         holder.preTest.setText(test.getPreTestInformation());
         holder.report.setText(test.getReportAvailability());
         holder.category.setText(test.getCategory());
         holder.testUsage.setText(test.getTestUsuage());
         holder.price.setText(holder.price.getText()+" "+test.getPrice());
-        holder.addToCart.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               checkItemsInCart();
-               if(cartItemsList.isEmpty())
-               {
-                   holder.addedToCart.setText("Added to cart");
-               }
-           }
-       });
+        holder.addedToCart.setText("Added to cart");
+
+        final List<CartItems> cartItemsList = new ArrayList<>();
+        getCurrentUrl();
+
+        DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("CartList").child(url).child("Products");
+        dref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    CartItems cartItems = ds.getValue(CartItems.class);
+                    cartItemsList.add(cartItems);
+                }
+                if (cartItemsList.isEmpty()) {
+                    holder.addedToCart.setText("");
+                    holder.addToCart.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            addingToCartList();
+                            holder.addedToCart.setText("Added To Cart");
+                            holder.addToCart.setVisibility(View.GONE);
+                        }
+                    });
+                } else {
+                    for (CartItems cart : cartItemsList) {
+                        if (cart.getItemCode().equals(code)) {
+                            holder.addedToCart.setText("Added To Cart");
+                            holder.addToCart.setVisibility(View.GONE);
+                        } else {
+                            holder.addedToCart.setText("");
+                            holder.addToCart.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    addingToCartList();
+                                    holder.addedToCart.setText("Added To Cart");
+                                    holder.addToCart.setVisibility(View.GONE);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
 
     }
 
@@ -99,24 +139,30 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
             price = view.findViewById(R.id.textView15);
             addedToCart = view.findViewById(R.id.textView16);
             addToCart = view.findViewById(R.id.imageView4);
+
         }
 
-        public void setAddToCart(ImageView addToCart) {
-            this.addToCart = addToCart;
-        }
     }
 
-    private  void checkItemsInCart()
+    private boolean checkItemsInCart(final String code)
     {
-        cartItemsList = new ArrayList<>();
+        final List<CartItems> cartItemsList = new ArrayList<>();
         getCurrentUrl();
-        DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("Cart List").child("User View").child(url).child("Products");
+        final boolean[] flag = {false};
+
+        DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("CartList").child(url).child("Products");
         dref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     CartItems cartItems = ds.getValue(CartItems.class);
                     cartItemsList.add(cartItems);
+                }
+                for (CartItems cart:cartItemsList) {
+                    if(cart.getItemCode().equals(code))
+                    {
+                        flag[0] = true;
+                    }
                 }
             }
 
@@ -125,6 +171,8 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
 
             }
         });
+        Log.d("CHECKING",flag[0]+"");
+        return flag[0];
     }
     private void getCurrentUrl()
     {
@@ -135,20 +183,45 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
             url = url.substring(0,url.indexOf("@"));
         }
     }
-    private  void addingToCartList()
+    private void addingToCartList()
     {
-        String saveCurrentDate,saveCurrentTime;
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
-        saveCurrentDate = currentDate.format(calendar.getTime());
+        String saveCurrentDate, saveCurrentTime;
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+            saveCurrentDate = currentDate.format(calendar.getTime());
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
-        saveCurrentTime = currentTime.format(calendar.getTime());
+            SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+            saveCurrentTime = currentTime.format(calendar.getTime());
 
-        CartItems cart = new CartItems(code,saveCurrentTime,saveCurrentDate,price);
+            CartItems cart = new CartItems(code, saveCurrentTime, saveCurrentDate, price);
 
-        DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("Cart List");
-        dref.child("User View").child(url).child("Products").child(code).push().setValue(cart);
+            DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("CartList");
+                    dref.child(url).child("Products").push().setValue(cart);
+    }
 
+    private boolean addItemsInCart(Context context)
+    {
+        Cart cart = new Cart(context);
+        List<String> cartList = new ArrayList<>();
+        Cursor cursor =cart.viewData();
+        if(cursor.moveToFirst())
+        {
+            do {
+                String itemCode=cursor.getString(cursor.getColumnIndex("itemCode"));
+                cartList.add(itemCode);
+            }while (cursor.moveToNext());
+        }
+
+        if(!cartList.contains(code))
+        {
+            boolean flag =cart.addData(code,price);
+            {
+                if(flag) {
+                    Toast.makeText(context,"added",Toast.LENGTH_LONG).show();
+                    return true;
+                }
+            }
+        }
+       return false;
     }
 }
