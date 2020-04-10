@@ -3,6 +3,8 @@ package com.example.lab;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,10 +28,13 @@ public class TestsDetails extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     DatabaseReference databaseReference;
-    List<Test> testList ;
-    List<CartItems> cartItemsList;
-    ProgressDialog progressDialog;
 
+    ProgressDialog progressDialog;
+    TextView viewCartSummary;
+    String url = Constants.getCurrentUrl();
+
+    public  static  List<CartItems> cartItemsList= new ArrayList<>();
+    public static List<Test> testList = new ArrayList<>();;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +43,49 @@ public class TestsDetails extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        viewCartSummary = findViewById(R.id.textView20);
+        cartItemsList.clear();
+        testList.clear();
+
+        DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("CartList").child(url).child("Products");
+        dref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    CartItems cartItems = ds.getValue(CartItems.class);
+                    cartItemsList.add(cartItems);
+                    Log.d("CHECK",cartItems.getItemCode());
+                }
+                viewCartSummary.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(cartItemsList.isEmpty())
+                        {
+                            Intent in = new Intent(getApplicationContext(),CartIsEmpty.class);
+                            startActivity(in);
+                        }
+                        else
+                        {
+                            Intent in = new Intent(getApplicationContext(),ViewCartSummary.class);
+                            startActivity(in);
+                        }
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         progressDialog =new ProgressDialog(this);
         progressDialog.setTitle("Please wait...");
         progressDialog.show();
 
-       testList = new ArrayList<>();
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("TestDetails/TestDetails");
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_PATH_UPLOADS);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,32 +107,4 @@ public class TestsDetails extends AppCompatActivity {
 
 
     }
-    private void getPriceOfCartImtems()
-    {
-        cartItemsList = new ArrayList<>();
-        String url ="";
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(firebaseUser!=null) {
-            url = firebaseUser.getEmail();
-            url = url.substring(0, url.indexOf("@"));
-
-            DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("Cart List").child("User View").child(url).child("Products");
-            dref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        CartItems cartItems = ds.getValue(CartItems.class);
-                        cartItemsList.add(cartItems);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-    }
-
 }

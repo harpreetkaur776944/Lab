@@ -180,6 +180,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="1"
+                    android:text="Added To cart"
                     android:textAlignment="center"
                     android:textColor="#2b580c"
                     android:textSize="18sp"

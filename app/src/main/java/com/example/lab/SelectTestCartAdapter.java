@@ -32,14 +32,17 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.example.lab.TestsDetails.cartItemsList;
+
 public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAdapter.ViewHolder>{
 
     Context context;
     List<Test> testList;
     String code;
     String price;
-    String url;
-  static  List<CartItems> cartItemsList = new ArrayList<>();
+    String url = Constants.getCurrentUrl();
+    String name;
+
     public SelectTestCartAdapter(Context context, List<Test> testList) {
         this.context = context;
         this.testList = testList;
@@ -58,71 +61,52 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
         final Test test = testList.get(position);
         code = test.getTestCode();
         price = test.getPrice();
+        name = test.getName();
         holder.testName.setText(test.getName());
         holder.preTest.setText(test.getPreTestInformation());
         holder.report.setText(test.getReportAvailability());
         holder.category.setText(test.getCategory());
         holder.testUsage.setText(test.getTestUsuage());
-        holder.price.setText(holder.price.getText()+" "+test.getPrice());
-        holder.addedToCart.setText("Added to cart");
+        holder.price.setText(holder.price.getText() + " " + test.getPrice());
+        holder.addedToCart.setText("");
 
-
-        getCurrentUrl();
-
-        DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("CartList").child(url).child("Products");
-        dref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    CartItems cartItems = ds.getValue(CartItems.class);
-                    cartItemsList.add(cartItems);
+        if(cartItemsList.isEmpty())
+        {
+            holder.addedToCart.setText("");
+            holder.addToCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addingToCartList();
+                    holder.addedToCart.setText("Added To Cart");
+                    holder.addToCart.setVisibility(View.GONE);
                 }
-                if (cartItemsList.isEmpty()) {
-                    holder.addedToCart.setText("");
-                    holder.addToCart.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            addingToCartList();
-                            holder.addedToCart.setText("Added To Cart");
-                            holder.addToCart.setVisibility(View.GONE);
-                        }
-                    });
-                } else {
-                    for (CartItems cart : cartItemsList) {
-                        if (cart.getItemCode().equals(code)) {
-                            holder.addedToCart.setText("Added To Cart");
-                            holder.addToCart.setVisibility(View.GONE);
-                            break;
-                        } else {
-                            holder.addedToCart.setText("");
-                            holder.addToCart.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    addingToCartList();
-                                    holder.addedToCart.setText("Added To Cart");
-                                    holder.addToCart.setVisibility(View.GONE);
-                                }
-                            });
-                        }
+            });
+        }
+
+        for (CartItems cart : cartItemsList) {
+            if (cart.getItemCode().equals(code)) {
+                holder.addedToCart.setText("Added To Cart");
+                holder.addToCart.setVisibility(View.GONE);
+                break;
+            } else {
+                holder.addedToCart.setText("");
+                holder.addToCart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addingToCartList();
+                        holder.addedToCart.setText("Added To Cart");
+                        holder.addToCart.setVisibility(View.GONE);
                     }
-                }
+                });
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-
+        }
 
     }
-
     @Override
     public int getItemCount() {
         return testList.size();
     }
+
 
 
     public class ViewHolder extends  RecyclerView.ViewHolder{
@@ -145,45 +129,6 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
 
     }
 
-    private boolean checkItemsInCart(final String code)
-    {
-        final List<CartItems> cartItemsList = new ArrayList<>();
-        getCurrentUrl();
-        final boolean[] flag = {false};
-
-        DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("CartList").child(url).child("Products");
-        dref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    CartItems cartItems = ds.getValue(CartItems.class);
-                    cartItemsList.add(cartItems);
-                }
-                for (CartItems cart:cartItemsList) {
-                    if(cart.getItemCode().equals(code))
-                    {
-                        flag[0] = true;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        Log.d("CHECKING",flag[0]+"");
-        return flag[0];
-    }
-    private void getCurrentUrl()
-    {
-        url ="";
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(firebaseUser!=null){
-            url = firebaseUser.getEmail();
-            url = url.substring(0,url.indexOf("@"));
-        }
-    }
     private void addingToCartList()
     {
         String saveCurrentDate, saveCurrentTime;
@@ -194,35 +139,10 @@ public class SelectTestCartAdapter extends RecyclerView.Adapter<SelectTestCartAd
             SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
             saveCurrentTime = currentTime.format(calendar.getTime());
 
-            CartItems cart = new CartItems(code, saveCurrentTime, saveCurrentDate, price);
+            CartItems cart = new CartItems(code, saveCurrentTime, saveCurrentDate, price,name);
 
             DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("CartList");
                     dref.child(url).child("Products").push().setValue(cart);
     }
 
-    private boolean addItemsInCart(Context context)
-    {
-        Cart cart = new Cart(context);
-        List<String> cartList = new ArrayList<>();
-        Cursor cursor =cart.viewData();
-        if(cursor.moveToFirst())
-        {
-            do {
-                String itemCode=cursor.getString(cursor.getColumnIndex("itemCode"));
-                cartList.add(itemCode);
-            }while (cursor.moveToNext());
-        }
-
-        if(!cartList.contains(code))
-        {
-            boolean flag =cart.addData(code,price);
-            {
-                if(flag) {
-                    Toast.makeText(context,"added",Toast.LENGTH_LONG).show();
-                    return true;
-                }
-            }
-        }
-       return false;
-    }
 }

@@ -7,20 +7,28 @@ public class CartItems {
     String itemTime;
     String itemDate;
     String itemPrice;
+    String itemName;
 
 
-    public CartItems(String itemCode, String itemTime, String itemDate, String itemPrice) {
+    public CartItems(String itemCode, String itemTime, String itemDate, String itemPrice,String itemName) {
         this.itemCode = itemCode;
         this.itemTime = itemTime;
         this.itemDate = itemDate;
         this.itemPrice = itemPrice;
-
+        this.itemName = itemName;
     }
 
     public CartItems() {
     }
 
 
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
 
     public String getItemCode() {
         return itemCode;

@@ -37,12 +37,9 @@ public class SelectTestCart extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     DatabaseReference databaseReference;
-    List<Test> testList ;
+    List<Test> testList1 ;
     ProgressDialog progressDialog;
-    TextView addedToCart,viewCart;
-    ImageView addToCart;
     String code;
-    String price;
     Toolbar toolbar;
 
     @Override
@@ -53,16 +50,23 @@ public class SelectTestCart extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         toolbar = findViewById(R.id.toolbar);
 
         code = getIntent().getStringExtra("testcode");
 
         progressDialog =new ProgressDialog(this);
         progressDialog.setTitle("Please wait...");
-        progressDialog.show();
+       // progressDialog.show();
 
-        testList = new ArrayList<>();
+        testList1 = new ArrayList<>();
+
+        for (Test test:TestsDetails.testList) {
+            if(test.getTestCode().equals(code))
+                testList1.add(test);
+        }
+
+        adapter = new SelectTestCartAdapter(getApplicationContext(), testList1);
+        recyclerView.setAdapter(adapter);
 
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +76,7 @@ public class SelectTestCart extends AppCompatActivity {
             }
         });
 
+/*
         databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_PATH_UPLOADS);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -93,7 +98,7 @@ public class SelectTestCart extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
-
+*/
     }
 
 }
