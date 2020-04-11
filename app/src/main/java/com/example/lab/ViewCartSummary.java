@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -44,7 +45,8 @@ public class ViewCartSummary extends AppCompatActivity {
         totalCharges = findViewById(R.id.textViewTotal);
         addMoreItems = findViewById(R.id.button2);
         checkout = findViewById(R.id.button3);
-        cartList= new ArrayList<>();;
+        cartList= new ArrayList<>();
+
 
         recyclerView = findViewById(R.id.recyclerView4);
         recyclerView.setHasFixedSize(true);
@@ -80,6 +82,14 @@ public class ViewCartSummary extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(getApplicationContext(),OrderDetails.class);
+                startActivity(in);
             }
         });
 
