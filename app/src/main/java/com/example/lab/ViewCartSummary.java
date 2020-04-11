@@ -31,7 +31,8 @@ public class ViewCartSummary extends AppCompatActivity {
     RecyclerView.Adapter adapter;
     TextView charges,extraCharges,totalCharges;
     Button addMoreItems,checkout;
-    List<CartItems> cartItemsList = new ArrayList<>();
+    List<CartItems> cartList;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,27 +44,44 @@ public class ViewCartSummary extends AppCompatActivity {
         totalCharges = findViewById(R.id.textViewTotal);
         addMoreItems = findViewById(R.id.button2);
         checkout = findViewById(R.id.button3);
-
-        cartItemsList = TestsDetails.cartItemsList;
-
-        if(!cartItemsList.isEmpty()) {
-            charges.setText(getTotalCharges(cartItemsList) + "");
-            extraCharges.setText("50");
-            int temp = getTotalCharges(cartItemsList) + 50;
-            totalCharges.setText(temp + "");
-        }
-        else
-        {
-            Intent in = new Intent(getApplicationContext(),CartIsEmpty.class);
-            startActivity(in);
-        }
+        cartList= new ArrayList<>();;
 
         recyclerView = findViewById(R.id.recyclerView4);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new ViewCartSummaryAdapter(getApplicationContext(), cartItemsList);
-        recyclerView.setAdapter(adapter);
+        databaseReference= FirebaseDatabase.getInstance().getReference().child("CartList").child(Constants.getCurrentUrl()).child("Products");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    CartItems cartItems = ds.getValue(CartItems.class);
+                    cartList.add(cartItems);
+                    Log.d("TEST CHECK",cartItems.getItemCode());
+                }
+
+                if(!cartList.isEmpty()) {
+                    Log.d("TEST CHECK","NotEmpty");
+                    charges.setText(getTotalCharges(cartList) + "");
+                    extraCharges.setText("50");
+                    int temp = getTotalCharges(cartList) + 50;
+                    totalCharges.setText(temp + "");
+                }
+                else
+                {
+                    Log.d("TEST CHECK","Empty");
+                    Intent in = new Intent(getApplicationContext(),CartIsEmpty.class);
+                    startActivity(in);
+                }
+
+                adapter = new ViewCartSummaryAdapter(getApplicationContext(), cartList);
+                recyclerView.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

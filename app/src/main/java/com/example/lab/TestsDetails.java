@@ -34,7 +34,7 @@ public class TestsDetails extends AppCompatActivity {
     String url = Constants.getCurrentUrl();
 
     public  static  List<CartItems> cartItemsList= new ArrayList<>();
-    public static List<Test> testList = new ArrayList<>();;
+    public static List<Test> testList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +54,7 @@ public class TestsDetails extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     CartItems cartItems = ds.getValue(CartItems.class);
                     cartItemsList.add(cartItems);
-                    Log.d("CHECK",cartItems.getItemCode());
+                  //  Log.d("CHECK",cartItems.getItemCode());
                 }
                 viewCartSummary.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -106,5 +106,12 @@ public class TestsDetails extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent in = new Intent(getApplicationContext(),Temp.class);
+        startActivity(in);
     }
 }

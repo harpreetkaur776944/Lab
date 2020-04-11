@@ -94,24 +94,21 @@ public class ViewCartSummaryAdapter extends RecyclerView.Adapter<ViewCartSummary
             delete = view.findViewById(R.id.imageView5);
         }
     }
-    private void deleteCartItem(final CartItems cartItems, final int position)
+    public void deleteCartItem(final CartItems cartItems, final int position)
     {
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference();
-        Query query = databaseReference.child("CartList").child(url).child("Products");
-        query.addValueEventListener(new ValueEventListener() {
+        Query query = databaseReference.child("CartList").child(url).child("Products").orderByChild("itemCode").equalTo(cartItems.getItemCode());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    CartItems cartItems1 = ds.getValue(CartItems.class);
-                    if(cartItems.getItemCode().equals(cartItems1.getItemCode()))
-                    {
-                        ds.getRef().removeValue();
-                        cartItemsList.remove(position);
-                        notifyDataSetChanged();
-                        break;
-                    }
+                    ds.getRef().removeValue();
+                    cartItemsList.remove(position);
+                    TestsDetails.cartItemsList.remove(position);
+                    //TestsDetails.cartItemsList.clear();
+                    cartItemsList.clear();
                 }
             }
 
