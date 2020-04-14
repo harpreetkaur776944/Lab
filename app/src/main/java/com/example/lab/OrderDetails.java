@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -25,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -41,6 +44,7 @@ public class OrderDetails extends AppCompatActivity {
     RadioGroup radioGroup;
     RadioButton r1,r2,r3,r4;
     DatabaseReference databaseReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,9 @@ public class OrderDetails extends AppCompatActivity {
         r4 = findViewById(R.id.radioButton4);
         error = findViewById(R.id.textViewError);
 
+
         radioGroup.clearCheck();
+        radioGroup.setVisibility(View.GONE);
         r1.setEnabled(true);
         r2.setEnabled(true);
         r3.setEnabled(true);
@@ -79,17 +85,6 @@ public class OrderDetails extends AppCompatActivity {
         ArrayAdapter adp2 = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,state);
         selectState.setAdapter(adp2);
 
-
-
-        final String Name = name.getText().toString().trim();
-        final String Phone = phone.getText().toString().trim();
-        final String Pincode = pincode.getText().toString().trim();
-        final String HouseNo = houseNo.getText().toString().trim();
-        final String Street = street.getText().toString().trim();
-        final String Landmark = landmark.getText().toString().trim();
-        final String City = selectcity.getSelectedItem().toString();
-        final String State = selectState.getSelectedItem().toString();
-
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,13 +93,20 @@ public class OrderDetails extends AppCompatActivity {
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                final int min = calendar.get(Calendar.MINUTE);
+                Log.d("TIME",hour+ " "+min);
+
                 DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String DateOrder = day + "/"+month+"/"+year;
+                        checkIfDateAvilable(DateOrder,hour,min);
                         date.setText(DateOrder);
+                        radioGroup.setVisibility(View.VISIBLE);
                     }
                 },year,month,dayOfMonth);
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
 
             }
@@ -113,6 +115,17 @@ public class OrderDetails extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final String Name = name.getText().toString().trim();
+                final String Phone = phone.getText().toString().trim();
+                final String Pincode = pincode.getText().toString().trim();
+                final String HouseNo = houseNo.getText().toString().trim();
+                final String Street = street.getText().toString().trim();
+                final String Landmark = landmark.getText().toString().trim();
+                final String City = selectcity.getSelectedItem().toString();
+                final String State = selectState.getSelectedItem().toString();
+
+                error.setText("");
 
                 if(Name.isEmpty())
                 {
@@ -156,7 +169,7 @@ public class OrderDetails extends AppCompatActivity {
                 String OrderId =Phone+System.currentTimeMillis();
                 String dateOrder = date.getText().toString().trim();
 
-                boolean flag = false,flag2 = false;
+                boolean flag = false,flag2 = false,flag3 = false;
                 if(City.equals("Select City"))
                 {
                     error.setText("City must be selected ");
@@ -168,29 +181,39 @@ public class OrderDetails extends AppCompatActivity {
                     flag2= true;
                 }
 
-                checkIfDateAvilable(dateOrder);
+                if(date.getText().toString().equals("<-- Select the Date"))
+                {
+                    error.setText(error.getText().toString()+"Please select the date");
+                    flag3= true;
+                }
 
                 String timeSlot="";
-                if(r1.isSelected())
+                if(r1.isChecked())
                     timeSlot=Constants.TIME_SLOT_FIRST;
-                else if(r2.isSelected())
+                else if(r2.isChecked())
                     timeSlot=Constants.TIME_SLOT_SECOND;
-                else if(r3.isSelected())
+                else if(r3.isChecked())
                     timeSlot=Constants.TIME_SLOT_THIRD;
-                else if(r4.isSelected())
+                else if(r4.isChecked())
                     timeSlot=Constants.TIME_SLOT_FOURTH;
 
-                if(flag && flag2 && !timeSlot.equals("")) {
+                Log.d("HERE","HELLO"+timeSlot);
+//
+                if(!flag && !flag2 && !flag3 && !timeSlot.equals("")) {
+
+                    databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_ORDER);
                     Order order = new Order(OrderId, Name, Phone, Pincode, HouseNo, Street, Landmark, City, State, dateOrder,timeSlot);
-                    databaseReference.child(Constants.DATABASE_ORDER).push().setValue(order);
+                    databaseReference.push().setValue(order);
+                    databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_TIMESLOT);
                     TimeSlot timeSlot1 = new TimeSlot(OrderId,dateOrder,timeSlot);
-                    databaseReference.child(Constants.DATABASE_TIMESLOT).push().setValue(timeSlot1);
+                    databaseReference.push().setValue(timeSlot1);
+                    Toast.makeText(getApplicationContext(),"Order placed",Toast.LENGTH_LONG).show();
                 }
             }
         });
 
     }
-    private void checkIfDateAvilable(final String date)
+    private void checkIfDateAvilable(final String date, final int hour, int min)
     {
         final List<TimeSlot> checkList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_TIMESLOT);
@@ -202,22 +225,24 @@ public class OrderDetails extends AppCompatActivity {
                    if(timeSlot.date.equals(date))
                    {
                        checkList.add(timeSlot);
+                       Log.d("CHECK DATE",timeSlot.getDate());
                    }
                 }
-                if(checkList.size()==4)
+                if(checkList.size()==4 || hour>=19 )
                 {
                     time.setText("No Booking Avaliable for this date select another");
                 }
                 else {
                     time.setText("Select the Time Slot");
                     for (TimeSlot timeslot : checkList) {
-                        if (timeslot.getDate().equals(Constants.TIME_SLOT_FIRST))
+
+                        if (timeslot.getTime().equals(Constants.TIME_SLOT_FIRST) || hour>12 )
                             r1.setEnabled(false);
-                        else if (timeslot.getDate().equals(Constants.TIME_SLOT_SECOND))
+                        else if (timeslot.getTime().equals(Constants.TIME_SLOT_SECOND) || hour>14)
                             r2.setEnabled(false);
-                        else if (timeslot.getDate().equals(Constants.TIME_SLOT_THIRD))
+                        else if (timeslot.getTime().equals(Constants.TIME_SLOT_THIRD) || hour>16)
                             r3.setEnabled(false);
-                        else if (timeslot.getDate().equals(Constants.TIME_SLOT_FOURTH))
+                        else if (timeslot.getTime().equals(Constants.TIME_SLOT_FOURTH) || hour>=19)
                             r4.setEnabled(false);
                     }
                 }
