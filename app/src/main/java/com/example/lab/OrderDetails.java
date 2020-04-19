@@ -3,6 +3,7 @@ package com.example.lab;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,13 +27,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
 
+import org.json.JSONObject;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-public class OrderDetails extends AppCompatActivity {
+public class OrderDetails extends AppCompatActivity implements PaymentResultListener {
 
     EditText name,phone,pincode,houseNo,street,landmark;
     TextView date,time,error;
@@ -44,12 +51,16 @@ public class OrderDetails extends AppCompatActivity {
     RadioGroup radioGroup;
     RadioButton r1,r2,r3,r4;
     DatabaseReference databaseReference;
+    public static final String TAG="ERRORPAY";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
+
+        Checkout.preload(getApplicationContext());
+
         name = findViewById(R.id.editTextName);
         phone = findViewById(R.id.editTextPhone);
         pincode = findViewById(R.id.editTextPincode);
@@ -207,13 +218,40 @@ public class OrderDetails extends AppCompatActivity {
                     databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_TIMESLOT);
                     TimeSlot timeSlot1 = new TimeSlot(OrderId,dateOrder,timeSlot);
                     databaseReference.push().setValue(timeSlot1);
+                    startPayment();
+                    Intent in = new Intent(getApplicationContext(),Temp.class);
+                    startActivity(in);
                     Toast.makeText(getApplicationContext(),"Order placed",Toast.LENGTH_LONG).show();
                 }
             }
         });
 
     }
-    private void checkIfDateAvilable(final String date, final int hour, int min)
+
+    public void startPayment() {
+
+        final Checkout checkout = new Checkout();
+
+        final Activity activity = this;
+
+
+        try {
+            JSONObject options = new JSONObject();
+            options.put("name", "Laboratory");
+            options.put("description", "Test Order");
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+            //   options.put("order_id", "order_9A33XWu170gUtm");
+            options.put("currency", "INR");
+            options.put("amount", "100");
+
+            checkout.open(activity, options);
+
+        } catch(Exception e) {
+            Log.e("PAYMENT", "Error in starting Razorpay Checkout", e);
+        }
+    }
+
+    private void checkIfDateAvilable(final String date, final int hour, final int min)
     {
         final List<TimeSlot> checkList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_TIMESLOT);
@@ -228,22 +266,35 @@ public class OrderDetails extends AppCompatActivity {
                        Log.d("CHECK DATE",timeSlot.getDate());
                    }
                 }
-                if(checkList.size()==4 || hour>=19 )
+
+
+                calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                String tempDate = dayOfMonth+"/"+month+"/"+year;
+                Log.d("Date",tempDate);
+                Log.d("Date Here",date+"u");
+
+                if(checkList.size()==4 || (tempDate.equals(date) && hour>=19) )
                 {
                     time.setText("No Booking Avaliable for this date select another");
+                    radioGroup.setVisibility(View.GONE);
                 }
                 else {
+                    radioGroup.setVisibility(View.VISIBLE);
                     time.setText("Select the Time Slot");
                     for (TimeSlot timeslot : checkList) {
 
-                        if (timeslot.getTime().equals(Constants.TIME_SLOT_FIRST) || hour>12 )
-                            r1.setEnabled(false);
-                        else if (timeslot.getTime().equals(Constants.TIME_SLOT_SECOND) || hour>14)
-                            r2.setEnabled(false);
-                        else if (timeslot.getTime().equals(Constants.TIME_SLOT_THIRD) || hour>16)
-                            r3.setEnabled(false);
-                        else if (timeslot.getTime().equals(Constants.TIME_SLOT_FOURTH) || hour>=19)
+                        if (timeslot.getTime().equals(Constants.TIME_SLOT_FOURTH) || (tempDate.equals(date)&&hour>=19))
                             r4.setEnabled(false);
+                        if (timeslot.getTime().equals(Constants.TIME_SLOT_THIRD) || (tempDate.equals(date)&&hour>16))
+                            r3.setEnabled(false);
+                        if (timeslot.getTime().equals(Constants.TIME_SLOT_SECOND) || (tempDate.equals(date)&&hour>14))
+                            r2.setEnabled(false);
+                        if (timeslot.getTime().equals(Constants.TIME_SLOT_FIRST) || (tempDate.equals(date)&&hour>12 ))
+                            r1.setEnabled(false);
+
                     }
                 }
             }
@@ -256,5 +307,22 @@ public class OrderDetails extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onPaymentSuccess(String s) {
+        try {
+            Toast.makeText(this, "Payment Successful: " + s, Toast.LENGTH_SHORT).show();
 
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in onPaymentSuccess", e);
+        }
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
+        try {
+            Toast.makeText(this, "Payment failed: " + i + " " + s, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in onPaymentError", e);
+        }
+    }
 }
