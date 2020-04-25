@@ -52,6 +52,9 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
     RadioButton r1,r2,r3,r4;
     DatabaseReference databaseReference;
     public static final String TAG="ERRORPAY";
+    String Name,Phone,Pincode,HouseNo,Street,Landmark,City,State,OrderId,dateOrder,timeSlot2;
+    String amount;
+    List<CartItems> cartList;
 
 
     @Override
@@ -112,7 +115,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String DateOrder = day + "/"+month+"/"+year;
-                        checkIfDateAvilable(DateOrder,hour,min);
+                        checkIfDateAvilable(DateOrder);
                         date.setText(DateOrder);
                         radioGroup.setVisibility(View.VISIBLE);
                     }
@@ -123,112 +126,150 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
             }
         });
 
+
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final String Name = name.getText().toString().trim();
-                final String Phone = phone.getText().toString().trim();
-                final String Pincode = pincode.getText().toString().trim();
-                final String HouseNo = houseNo.getText().toString().trim();
-                final String Street = street.getText().toString().trim();
-                final String Landmark = landmark.getText().toString().trim();
-                final String City = selectcity.getSelectedItem().toString();
-                final String State = selectState.getSelectedItem().toString();
-
-                error.setText("");
-
-                if(Name.isEmpty())
-                {
-                    name.setError("Name is required");
-                    name.requestFocus();
-                    return;
-                }
-                if(Phone.isEmpty())
-                {
-                    phone.setError("PhoneNumber is required");
-                    phone.requestFocus();
-                    return;
-                }
-                if(Pincode.isEmpty())
-                {
-                    pincode.setError("Pincode is required");
-                    pincode.requestFocus();
-                    return;
-                }
-                if(Landmark.isEmpty())
-                {
-                    landmark.setError("Landmark is required");
-                    landmark.requestFocus();
-                    return;
-                }
-
-                if(HouseNo.isEmpty())
-                {
-                    houseNo.setError("House Number is required");
-                    houseNo.requestFocus();
-                    return;
-                }
-                if(Street.isEmpty())
-                {
-                    street.setError("Street is required");
-                    street.requestFocus();
-                    return;
-                }
-
-
-                String OrderId =Phone+System.currentTimeMillis();
-                String dateOrder = date.getText().toString().trim();
-
-                boolean flag = false,flag2 = false,flag3 = false;
-                if(City.equals("Select City"))
-                {
-                    error.setText("City must be selected ");
-                    flag = true;
-                }
-                if(State.equals("Select State"))
-                {
-                    error.setText(error.getText().toString().trim()+"State must be selected ");
-                    flag2= true;
-                }
-
-                if(date.getText().toString().equals("<-- Select the Date"))
-                {
-                    error.setText(error.getText().toString()+"Please select the date");
-                    flag3= true;
-                }
-
-                String timeSlot="";
-                if(r1.isChecked())
-                    timeSlot=Constants.TIME_SLOT_FIRST;
-                else if(r2.isChecked())
-                    timeSlot=Constants.TIME_SLOT_SECOND;
-                else if(r3.isChecked())
-                    timeSlot=Constants.TIME_SLOT_THIRD;
-                else if(r4.isChecked())
-                    timeSlot=Constants.TIME_SLOT_FOURTH;
-
-                Log.d("HERE","HELLO"+timeSlot);
-//
-                if(!flag && !flag2 && !flag3 && !timeSlot.equals("")) {
-
-                    databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_ORDER);
-                    Order order = new Order(OrderId, Name, Phone, Pincode, HouseNo, Street, Landmark, City, State, dateOrder,timeSlot);
-                    databaseReference.push().setValue(order);
-                    databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_TIMESLOT);
-                    TimeSlot timeSlot1 = new TimeSlot(OrderId,dateOrder,timeSlot);
-                    databaseReference.push().setValue(timeSlot1);
-                    startPayment();
-                    Intent in = new Intent(getApplicationContext(),Temp.class);
-                    startActivity(in);
-                    Toast.makeText(getApplicationContext(),"Order placed",Toast.LENGTH_LONG).show();
-                }
+                check();
             }
         });
 
     }
 
-    public void startPayment() {
+    public void check()
+    {
+        Name = name.getText().toString().trim();
+        Phone = phone.getText().toString().trim();
+        Pincode = pincode.getText().toString().trim();
+        HouseNo = houseNo.getText().toString().trim();
+        Street = street.getText().toString().trim();
+        Landmark = landmark.getText().toString().trim();
+        City = selectcity.getSelectedItem().toString();
+        State = selectState.getSelectedItem().toString();
+
+        error.setText("");
+
+        if(Name.isEmpty())
+        {
+            name.setError("Name is required");
+            name.requestFocus();
+            return;
+        }
+        if(Phone.isEmpty())
+        {
+            phone.setError("PhoneNumber is required");
+            phone.requestFocus();
+            return;
+        }
+        else if(Phone.length()!=10)
+        {
+            phone.setError("Invalid Phone Number");
+            phone.requestFocus();
+            return;
+        }
+        if(Pincode.isEmpty())
+        {
+            pincode.setError("Pincode is required");
+            pincode.requestFocus();
+            return;
+        }
+        else if(Pincode.length()!=6)
+        {
+            pincode.setError("Invalid pincode");
+            pincode.requestFocus();
+            return;
+        }
+        if(Landmark.isEmpty())
+        {
+            landmark.setError("Landmark is required");
+            landmark.requestFocus();
+            return;
+        }
+
+        if(HouseNo.isEmpty())
+        {
+            houseNo.setError("House Number is required");
+            houseNo.requestFocus();
+            return;
+        }
+        if(Street.isEmpty())
+        {
+            street.setError("Street is required");
+            street.requestFocus();
+            return;
+        }
+
+
+        OrderId =Phone+System.currentTimeMillis();
+        dateOrder = date.getText().toString().trim();
+
+        boolean flag = false,flag2 = false,flag3 = false;
+        if(City.equals("Select City"))
+        {
+            error.setText("City must be selected ");
+            flag = true;
+        }
+        if(State.equals("Select State"))
+        {
+            error.setText(error.getText().toString().trim()+"State must be selected ");
+            flag2= true;
+        }
+
+        if(date.getText().toString().equals("<-- Select the Date"))
+        {
+            error.setText(error.getText().toString()+"Please select the date");
+            flag3= true;
+        }
+
+        timeSlot2="";
+        if(r1.isChecked())
+            timeSlot2=Constants.TIME_SLOT_FIRST;
+        else if(r2.isChecked())
+            timeSlot2=Constants.TIME_SLOT_SECOND;
+        else if(r3.isChecked())
+            timeSlot2=Constants.TIME_SLOT_THIRD;
+        else if(r4.isChecked())
+            timeSlot2=Constants.TIME_SLOT_FOURTH;
+
+        Log.d("HERE","HELLO"+timeSlot2);
+//
+        if(!flag && !flag2 && !flag3 && !timeSlot2.equals("")) {
+            Intent intent = getIntent();
+            amount = intent.getStringExtra("Amount");
+           startPayment(amount);
+        }
+
+    }
+
+    public void placingOrder()
+    {
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_ORDER);
+        Order order = new Order(OrderId, Name, Phone, Pincode, HouseNo, Street, Landmark, City, State, dateOrder,timeSlot2);
+        databaseReference.push().setValue(order);
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_TIMESLOT);
+        TimeSlot timeSlot1 = new TimeSlot(OrderId,dateOrder,timeSlot2);
+        databaseReference.push().setValue(timeSlot1);
+
+        Intent intent = getIntent();
+        String item = intent.getStringExtra("Items");
+        String[] items = item.split(" ");
+        Log.d("ITEMS",item);
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_ORDER_ITEM_DETAILS);
+        for(int i=0;i<items.length;i++)
+        {
+            OrderItemsDetails orderItemsDetails= new OrderItemsDetails(OrderId,items[i]);
+            databaseReference.child(OrderId).push().setValue(orderItemsDetails);
+        }
+
+
+
+        Intent in = new Intent(getApplicationContext(),Temp.class);
+        startActivity(in);
+        Toast.makeText(getApplicationContext(),"Order placed",Toast.LENGTH_LONG).show();
+    }
+
+    public void startPayment(String amount) {
 
         final Checkout checkout = new Checkout();
 
@@ -240,9 +281,12 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
             options.put("name", "Laboratory");
             options.put("description", "Test Order");
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+            //Order order = checkout.Orders.create(options);
             //   options.put("order_id", "order_9A33XWu170gUtm");
             options.put("currency", "INR");
-            options.put("amount", "100");
+            int amt = Integer.parseInt(amount);
+            amt = amt*100;
+            options.put("amount",amt+"");
 
             checkout.open(activity, options);
 
@@ -251,7 +295,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
         }
     }
 
-    private void checkIfDateAvilable(final String date, final int hour, final int min)
+    private void checkIfDateAvilable(final String date)
     {
         final List<TimeSlot> checkList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_TIMESLOT);
@@ -272,9 +316,11 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
                 String tempDate = dayOfMonth+"/"+month+"/"+year;
                 Log.d("Date",tempDate);
                 Log.d("Date Here",date+"u");
+
 
                 if(checkList.size()==4 || (tempDate.equals(date) && hour>=19) )
                 {
@@ -306,11 +352,33 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
         });
     }
 
+    public  void removeOrderFromCheckList()
+    {
+        DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("CartList");
+        Query query = dref.orderByChild(Constants.getCurrentUrl());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    ds.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     @Override
     public void onPaymentSuccess(String s) {
         try {
             Toast.makeText(this, "Payment Successful: " + s, Toast.LENGTH_SHORT).show();
+            placingOrder();
+            removeOrderFromCheckList();
 
         } catch (Exception e) {
             Log.e(TAG, "Exception in onPaymentSuccess", e);

@@ -33,6 +33,7 @@ public class ViewCartSummary extends AppCompatActivity {
     TextView charges,extraCharges,totalCharges;
     Button addMoreItems,checkout;
     List<CartItems> cartList;
+    String items;
     DatabaseReference databaseReference;
 
     @Override
@@ -59,6 +60,7 @@ public class ViewCartSummary extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     CartItems cartItems = ds.getValue(CartItems.class);
                     cartList.add(cartItems);
+                    items += cartItems.itemCode+" ";
                     Log.d("TEST CHECK",cartItems.getItemCode());
                 }
 
@@ -89,6 +91,10 @@ public class ViewCartSummary extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(getApplicationContext(),OrderDetails.class);
+                String amt = totalCharges.getText().toString().trim();
+                in.putExtra("Items",items+"");
+                Log.d("it",items);
+                in.putExtra("Amount",amt);
                 startActivity(in);
             }
         });
