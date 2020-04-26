@@ -18,6 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sdsmdg.tastytoast.TastyToast;
 
 public class Login extends AppCompatActivity {
@@ -27,6 +32,8 @@ public class Login extends AppCompatActivity {
     CheckBox showPassword;
     ProgressBar progressBar;
     FirebaseAuth firebaseAuth;
+    DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +48,7 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar2);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
 
 
         showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -100,8 +108,6 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = email.getText().toString().trim();
-                String pass = password.getText().toString().trim();
                 check();
             }
         });
@@ -110,7 +116,7 @@ public class Login extends AppCompatActivity {
     {
 
         final String username = email.getText().toString().trim();
-        String pass = password.getText().toString().trim();
+        final String pass = password.getText().toString().trim();
 
         if(username.isEmpty())
         {
@@ -126,6 +132,7 @@ public class Login extends AppCompatActivity {
             return;
         }
 
+
         progressBar.setVisibility(View.VISIBLE);
         firebaseAuth.signInWithEmailAndPassword(username,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -133,10 +140,34 @@ public class Login extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if(task.isSuccessful())
                 {
+
                     if(firebaseAuth.getCurrentUser().isEmailVerified())
                     {
-                        Intent in = new Intent(getApplicationContext(),Temp.class);
-                        startActivity(in);
+
+                        databaseReference =  FirebaseDatabase.getInstance().getReference(Constants.DATABASE_LOGIN);
+                        databaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                String name ="";
+                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                    LoginDetails loginDetails = ds.getValue(LoginDetails.class);
+                                    if(loginDetails.Username.equals(username) && loginDetails.Password.equals(pass))
+                                        name = loginDetails.Name;
+                                }
+                                Intent in = new Intent(getApplicationContext(),Temp.class);
+                                in.putExtra("Name",name);
+                                startActivity(in);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+
+                        });
+
+
+
                     }
                     else
                     {

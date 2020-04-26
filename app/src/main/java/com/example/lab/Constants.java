@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Constants {
     public static final String DATABASE_PATH_UPLOADS = "TestDetails/TestDetails";
+    public static final String DATABASE_LOGIN="LoginDetails";
     public static final String DATABASE_ORDER="OrderDetails";
     public static final String DATABASE_TIMESLOT="OrderOccupied";
     public static final String DATABASE_ORDER_ITEM_DETAILS="OrderItemDetails";

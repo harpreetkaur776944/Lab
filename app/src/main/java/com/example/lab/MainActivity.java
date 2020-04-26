@@ -21,15 +21,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sdsmdg.tastytoast.TastyToast;
 
 public class MainActivity extends AppCompatActivity {
-    EditText email,password;
+    EditText email,password,name;
     Button signUp;
     CheckBox showPassword;
     ProgressBar progressBar;
     private FirebaseAuth mAuth;
     TextView textView;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         showPassword = findViewById(R.id.checkBox);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.textView2);
+        name = findViewById(R.id.signUpName);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -77,9 +81,15 @@ public class MainActivity extends AppCompatActivity {
     }
     private void registerUser()
     {
-
-        String username = email.getText().toString().trim();
-        String pass = password.getText().toString().trim();
+        final String uName = name.getText().toString().trim();
+        final String username = email.getText().toString().trim();
+        final String pass = password.getText().toString().trim();
+        if(uName.isEmpty())
+        {
+            name.setError("Name is required");
+            name.requestFocus();
+            return;
+        }
 
         if(username.isEmpty())
         {
@@ -121,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
                             if(task.isSuccessful())
                             {
                                 TastyToast.makeText(getApplicationContext(),"Registered !! Please check your email for your verification.",TastyToast.LENGTH_LONG,TastyToast.SUCCESS);
+                                databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_LOGIN);
+                                LoginDetails loginDetails = new LoginDetails(uName,username,pass);
+                                databaseReference.push().setValue(loginDetails);
+                                name.setText("");
                                 email.setText("");
                                 password.setText("");
                             }
