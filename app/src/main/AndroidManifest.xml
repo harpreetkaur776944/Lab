@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -13,13 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Splash">
+        <activity android:name=".EmailActivity"></activity>
+        <activity
+            android:name=".mainDrawrer"
+            android:label="@string/title_activity_main_drawrer"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Splash"></activity>
         <activity android:name=".Payment" />
         <activity android:name=".OrderDetails" />
         <activity android:name=".CartIsEmpty" />
@@ -28,7 +34,7 @@
         <activity android:name=".TestsDetails" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Temp" />
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Login" />
 
         <meta-data
             android:name="com.razorpay.ApiKey"

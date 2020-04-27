@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RatingsFragment">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/imageView7"
+            android:layout_width="120dp"
+            android:layout_height="102dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="259dp"
+            android:layout_marginBottom="616dp"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+
+            android:src="@drawable/like_icon"
+            app:srcCompat="@drawable/like_icon" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="274dp"
+        android:layout_height="63dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginBottom="552dp"
+        android:fontFamily="@font/basic"
+        android:text="Like this app?"
+        android:textColor="@color/myColor"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/textViewRate"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="181dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="492dp"
+        android:fontFamily="@font/basic"
+        android:text="Please select the emoji to rate it."
+        android:textSize="24sp" />
+
+    <com.hsalf.smilerating.SmileRating
+        android:id="@+id/smile_rating"
+        android:layout_width="match_parent"
+
+        android:layout_height="138dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="298dp"
+        android:layout_marginBottom="296dp" />
+
+    <Button
+        android:id="@+id/buttonRateCancel"
+        android:layout_width="122dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="525dp"
+        android:layout_marginEnd="224dp"
+        android:layout_marginBottom="150dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/myColor"
+        android:text="Cancel"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonRateSubmit"
+        android:layout_width="122dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="222dp"
+        android:layout_marginTop="529dp"
+        android:layout_marginEnd="67dp"
+        android:layout_marginBottom="146dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/myColor"
+        android:text="Submit"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+

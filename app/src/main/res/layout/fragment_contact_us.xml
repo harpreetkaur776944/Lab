@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContactUsFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="220dp"
+        android:layout_height="45dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="142dp"
+        android:layout_marginBottom="655dp"
+        android:text="Call Us"
+        android:textAllCaps="false"
+        android:textColor="@color/myColor"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="326dp"
+        android:layout_height="15dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="98dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="617dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="187dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="134dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginBottom="554dp"
+        android:text="9988125047"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="295dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="656dp"
+        android:src="@drawable/icons_call" />
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="192dp"
+        android:layout_marginEnd="188dp"
+        android:layout_marginBottom="501dp"
+        android:text="Write To Us"
+        android:textColor="@color/myColor"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="326dp"
+        android:layout_height="15dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="248dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="467dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="282dp"
+        android:layout_marginEnd="67dp"
+        android:layout_marginBottom="395dp"
+        android:text="itestproject@gmail.com"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="295dp"
+        android:layout_marginTop="193dp"
+        android:layout_marginEnd="63dp"
+        android:layout_marginBottom="498dp"
+        android:src="@drawable/icons_email" />
+
+</RelativeLayout>

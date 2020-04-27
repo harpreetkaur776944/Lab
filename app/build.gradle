@@ -49,6 +49,6 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'com.razorpay:checkout:1.5.16'
     implementation 'com.mikhaellopez:circularimageview:4.2.0'
-
+    implementation 'com.github.sujithkanna:smileyrating:2.0.0'
 
 }
