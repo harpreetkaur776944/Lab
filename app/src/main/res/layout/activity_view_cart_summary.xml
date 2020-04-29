@@ -7,6 +7,17 @@
     android:orientation="vertical"
     tools:context=".ViewCartSummary">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="Cart Items"
+        app:titleMarginStart="20dp"
+        app:titleTextColor="@android:color/white" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,10 +44,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/basic"
                     android:text="Cart Summary"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="#424874"
+                    android:textColor="@color/myColor"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -67,7 +78,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/basic"
                     android:text="Price Details"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="#424874"
@@ -93,9 +104,9 @@
                             android:id="@+id/textView24"
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="1"
                             android:text="Total Charges"
-                            android:textColor="#698474"
                             android:textSize="18sp" />
 
                         <TextView
@@ -105,14 +116,14 @@
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
                             android:text="@string/RS"
-                            android:textColor="#698474"
                             android:textSize="18dp" />
 
                         <TextView
                             android:id="@+id/textViewCharges"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:textAlignment="textStart" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -124,9 +135,9 @@
                             android:id="@+id/textView27"
                             android:layout_width="150dp"
                             android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="1"
                             android:text="Phlebotomy Charges"
-                            android:textColor="#698474"
                             android:textSize="18sp" />
 
                         <TextView
@@ -136,14 +147,14 @@
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
                             android:text="@string/RS"
-                            android:textColor="#698474"
                             android:textSize="18dp" />
 
                         <TextView
                             android:id="@+id/textViewExtraCharges"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:textAlignment="textStart" />
                     </LinearLayout>
 
                     <View
@@ -163,9 +174,9 @@
                             android:id="@+id/textView29"
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="1"
                             android:text="Total"
-                            android:textColor="#698474"
                             android:textSize="18dp" />
 
                         <TextView
@@ -175,14 +186,16 @@
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
                             android:text="@string/RS"
-                            android:textColor="#698474"
                             android:textSize="18dp" />
 
                         <TextView
                             android:id="@+id/textViewTotal"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/myColorFour"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -194,7 +207,7 @@
 
     <LinearLayout
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="5dp"
@@ -209,6 +222,7 @@
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:background="@drawable/round_button"
+            android:backgroundTint="@color/myColor"
             android:text="ADD MORE ITEMS"
             android:textColor="@android:color/white" />
 
@@ -221,6 +235,7 @@
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:background="@drawable/round_button"
+            android:backgroundTint="@color/myColor"
             android:text="CHECKOUT"
             android:textColor="@android:color/white" />
     </LinearLayout>

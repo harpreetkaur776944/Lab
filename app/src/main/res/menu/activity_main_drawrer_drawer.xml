@@ -21,6 +21,10 @@
             android:id="@+id/nav_contactus"
             android:icon="@drawable/icons_contact"
             android:title="Contact Us" />
+        <item
+            android:id="@+id/nav_cart"
+            android:icon="@drawable/icon_cart"
+            android:title="My Cart" />
 
     </group>
 </menu>

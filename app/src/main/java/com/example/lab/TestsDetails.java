@@ -111,7 +111,7 @@ public class TestsDetails extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent in = new Intent(getApplicationContext(),Temp.class);
+        Intent in = new Intent(getApplicationContext(),mainDrawrer.class);
         startActivity(in);
     }
 }

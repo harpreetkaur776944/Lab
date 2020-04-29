@@ -154,7 +154,7 @@ public class Login extends AppCompatActivity {
                                     if(loginDetails.Username.equals(username) && loginDetails.Password.equals(pass))
                                         name = loginDetails.Name;
                                 }
-                                Intent in = new Intent(getApplicationContext(),Temp.class);
+                                Intent in = new Intent(getApplicationContext(),mainDrawrer.class);
                                 in.putExtra("Name",name);
                                 startActivity(in);
                             }

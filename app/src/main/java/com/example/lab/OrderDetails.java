@@ -207,18 +207,21 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
         boolean flag = false,flag2 = false,flag3 = false;
         if(City.equals("Select City"))
         {
-            error.setText("City must be selected ");
+            Toast.makeText(getApplicationContext(),"City must be selected ",Toast.LENGTH_SHORT).show();
+           // error.setText("City must be selected ");
             flag = true;
         }
         if(State.equals("Select State"))
         {
-            error.setText(error.getText().toString().trim()+"State must be selected ");
+            Toast.makeText(getApplicationContext(),"State must be selected ",Toast.LENGTH_SHORT).show();
+           // error.setText(error.getText().toString().trim()+"State must be selected ");
             flag2= true;
         }
 
         if(date.getText().toString().equals("<-- Select the Date"))
         {
-            error.setText(error.getText().toString()+"Please select the date");
+            Toast.makeText(getApplicationContext(),"Please select the date ",Toast.LENGTH_SHORT).show();
+            //error.setText(error.getText().toString()+"Please select the date");
             flag3= true;
         }
 
@@ -319,6 +322,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
                 String tempDate = dayOfMonth+"/"+month+"/"+year;
                 Log.d("Date",tempDate);
+                Log.d("Hour",hour+"");
                 Log.d("Date Here",date+"u");
 
 
@@ -330,6 +334,18 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
                 else {
                     radioGroup.setVisibility(View.VISIBLE);
                     time.setText("Select the Time Slot");
+                    if(checkList.size()==0)
+                    {
+                        if (tempDate.equals(date)&&hour>=19)
+                            r4.setEnabled(false);
+                        if (tempDate.equals(date)&&hour>16)
+                            r3.setEnabled(false);
+                        if (tempDate.equals(date)&&hour>14)
+                            r2.setEnabled(false);
+                        if (tempDate.equals(date)&&hour>12 )
+                            r1.setEnabled(false);
+                    }
+
                     for (TimeSlot timeslot : checkList) {
 
                         if (timeslot.getTime().equals(Constants.TIME_SLOT_FOURTH) || (tempDate.equals(date)&&hour>=19))

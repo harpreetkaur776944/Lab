@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".OrderDetails">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="Add Details"
+        app:titleTextColor="@android:color/white" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,6 +25,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +41,7 @@
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:hint="Enter Full Name"
                 android:inputType="textPersonName" />
@@ -34,6 +50,7 @@
                 android:id="@+id/editTextPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:hint="Enter 10-digit mobile number"
                 android:inputType="phone" />
@@ -42,6 +59,7 @@
                 android:id="@+id/editTextPincode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:hint="Enter 6-digit pin code"
                 android:inputType="number" />
@@ -50,6 +68,7 @@
                 android:id="@+id/editTextHouseNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:hint="Flat/House No/Floor/Building"
                 android:inputType="textPersonName"
@@ -59,6 +78,7 @@
                 android:id="@+id/editTextStreet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:hint="Colony/Street/Locality"
                 android:inputType="textPersonName" />
@@ -67,20 +87,23 @@
                 android:id="@+id/editTextLandmark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:hint="Landmark"
                 android:inputType="textPersonName" />
 
             <Spinner
                 android:id="@+id/spinnerCity"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="40dp"
+                android:layout_marginBottom="5dp"
                 android:spinnerMode="dropdown" />
 
             <Spinner
                 android:id="@+id/spinnerState"
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="5dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,8 +117,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/border_button"
-                    android:backgroundTint="#F44336"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/myColor"
                     android:text="Select Date "
                     android:textColor="@android:color/white"
                     android:textStyle="bold" />
@@ -106,7 +129,7 @@
                     android:layout_height="40dp"
                     android:text="@string/select_the_date"
                     android:textAlignment="center"
-                    android:textColor="#3F51B5"
+                    android:textColor="@color/myColorFour"
                     android:textSize="18sp"
                     tools:ignore="ExtraText" />
 
@@ -125,9 +148,10 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/basic"
                     android:text="Select the time slot"
                     android:textAlignment="textStart"
-                    android:textColor="#009688"
+                    android:textColor="@color/myColorTwo"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -164,16 +188,16 @@
 
             <Button
                 android:id="@+id/buttonConfirm"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginTop="50dp"
+                android:layout_gravity="right|top"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/border_button"
-                android:backgroundTint="#009688"
-                android:text="Confirm"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/myColor"
+                android:text="Proceed To Pay"
                 android:textAlignment="center"
-                android:textColor="@color/cardview_light_background"
+                android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -185,4 +209,4 @@
 
         </LinearLayout>
     </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

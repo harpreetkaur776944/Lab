@@ -24,8 +24,8 @@
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-light"
                 android:text="TestName"
-                android:textColor="#4d4c7d"
-                android:textSize="24sp"
+                android:textColor="@color/myColorTwo"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -34,7 +34,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Price"
-                android:textColor="#698474"
                 android:textSize="18sp" />
 
         </LinearLayout>

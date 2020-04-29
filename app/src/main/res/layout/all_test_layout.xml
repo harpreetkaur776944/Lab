@@ -29,7 +29,7 @@
                 android:layout_marginRight="10dp"
                 android:text="Test Name"
                 android:textAlignment="center"
-                android:textColor="#d63447"
+                android:textColor="@color/myColor"
                 android:textSize="18sp"
                 android:textStyle="bold|italic" />
 
@@ -52,10 +52,10 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/border_button"
-                android:backgroundTint="#f57b51"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/myColor"
                 android:text="Read More..."
-                android:textColor="#f6eedf" />
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
 

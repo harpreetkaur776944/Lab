@@ -99,6 +99,14 @@ public class ViewCartSummary extends AppCompatActivity {
             }
         });
 
+        addMoreItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(getApplicationContext(),TestsDetails.class);
+                startActivity(in);
+            }
+        });
+
     }
 
     private int getTotalCharges(List<CartItems> cartItemsList)

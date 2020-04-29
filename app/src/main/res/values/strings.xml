@@ -18,4 +18,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main_drawrer">mainDrawrer</string>
     <string name="menu_RateUs">Rate Us</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
