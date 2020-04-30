@@ -137,7 +137,7 @@ public class Login extends AppCompatActivity {
         firebaseAuth.signInWithEmailAndPassword(username,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                progressBar.setVisibility(View.GONE);
+
                 if(task.isSuccessful())
                 {
 
@@ -154,6 +154,7 @@ public class Login extends AppCompatActivity {
                                     if(loginDetails.Username.equals(username) && loginDetails.Password.equals(pass))
                                         name = loginDetails.Name;
                                 }
+                                progressBar.setVisibility(View.GONE);
                                 Intent in = new Intent(getApplicationContext(),mainDrawrer.class);
                                 in.putExtra("Name",name);
                                 startActivity(in);
@@ -176,6 +177,7 @@ public class Login extends AppCompatActivity {
                 }
                 else
                 {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_LONG).show();
                 }
             }

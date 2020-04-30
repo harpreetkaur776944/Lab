@@ -114,7 +114,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
                 DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String DateOrder = day + "/"+month+"/"+year;
+                        String DateOrder = day+"/"+month+"/"+year;
                         checkIfDateAvilable(DateOrder);
                         date.setText(DateOrder);
                         radioGroup.setVisibility(View.VISIBLE);
@@ -320,13 +320,19 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
                 int month = calendar.get(Calendar.MONTH);
                 int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
                 String tempDate = dayOfMonth+"/"+month+"/"+year;
                 Log.d("Date",tempDate);
                 Log.d("Hour",hour+"");
                 Log.d("Date Here",date+"u");
+                String c;
+                if(tempDate.trim().equals(date.trim()))
+                {c="true"; }
+                else
+                {c="false"; }
+                Log.d("DT",c+"hello");
 
-
-                if(checkList.size()==4 || (tempDate.equals(date) && hour>=19) )
+                if(checkList.size()==4 || (tempDate.equals(date) && hour>=16) )
                 {
                     time.setText("No Booking Avaliable for this date select another");
                     radioGroup.setVisibility(View.GONE);
@@ -334,27 +340,26 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
                 else {
                     radioGroup.setVisibility(View.VISIBLE);
                     time.setText("Select the Time Slot");
-                    if(checkList.size()==0)
-                    {
-                        if (tempDate.equals(date)&&hour>=19)
-                            r4.setEnabled(false);
-                        if (tempDate.equals(date)&&hour>16)
-                            r3.setEnabled(false);
-                        if (tempDate.equals(date)&&hour>14)
-                            r2.setEnabled(false);
-                        if (tempDate.equals(date)&&hour>12 )
-                            r1.setEnabled(false);
-                    }
+
+                    if (tempDate.equals(date)&&hour>=16)
+                        r4.setEnabled(false);
+                    if (tempDate.equals(date)&&hour>=14)
+                        r3.setEnabled(false);
+                    if (tempDate.equals(date)&&hour>=12)
+                        r2.setEnabled(false);
+                    if (tempDate.equals(date)&&hour>=9)
+                        r1.setEnabled(false);
+
 
                     for (TimeSlot timeslot : checkList) {
 
-                        if (timeslot.getTime().equals(Constants.TIME_SLOT_FOURTH) || (tempDate.equals(date)&&hour>=19))
+                        if (timeslot.getTime().equals(Constants.TIME_SLOT_FOURTH))
                             r4.setEnabled(false);
-                        if (timeslot.getTime().equals(Constants.TIME_SLOT_THIRD) || (tempDate.equals(date)&&hour>16))
+                        if (timeslot.getTime().equals(Constants.TIME_SLOT_THIRD))
                             r3.setEnabled(false);
-                        if (timeslot.getTime().equals(Constants.TIME_SLOT_SECOND) || (tempDate.equals(date)&&hour>14))
+                        if (timeslot.getTime().equals(Constants.TIME_SLOT_SECOND))
                             r2.setEnabled(false);
-                        if (timeslot.getTime().equals(Constants.TIME_SLOT_FIRST) || (tempDate.equals(date)&&hour>12 ))
+                        if (timeslot.getTime().equals(Constants.TIME_SLOT_FIRST))
                             r1.setEnabled(false);
 
                     }
