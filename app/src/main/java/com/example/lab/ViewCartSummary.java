@@ -47,7 +47,7 @@ public class ViewCartSummary extends AppCompatActivity {
         addMoreItems = findViewById(R.id.button2);
         checkout = findViewById(R.id.button3);
         cartList= new ArrayList<>();
-
+        items="";
 
         recyclerView = findViewById(R.id.recyclerView4);
         recyclerView.setHasFixedSize(true);

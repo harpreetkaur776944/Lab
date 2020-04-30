@@ -55,6 +55,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
     String Name,Phone,Pincode,HouseNo,Street,Landmark,City,State,OrderId,dateOrder,timeSlot2;
     String amount;
     List<CartItems> cartList;
+    public static String products="" ;
 
 
     @Override
@@ -92,6 +93,35 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
         r4.setEnabled(true);
         time.setText("");
         error.setText("");
+
+        Intent intent = getIntent();
+        final  List<String> pro = new ArrayList<>();
+        String item = intent.getStringExtra("Items");
+        final String[] items = item.split(" ");
+        for (String str:items)
+        {
+            pro.add(str);
+        }
+        Log.d("ITEMS",item);
+        databaseReference =  FirebaseDatabase.getInstance().getReference(Constants.DATABASE_PATH_UPLOADS);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Test test = ds.getValue(Test.class);
+                    if(pro.contains(test.getTestCode()))
+                    {
+                       products += test.getName()+"@";
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         ArrayAdapter adp= new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,city);
         selectcity.setAdapter(adp);
@@ -265,6 +295,11 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
             databaseReference.child(OrderId).push().setValue(orderItemsDetails);
         }
 
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_ORDER_HISTORY).child(Constants.getCurrentUrl());
+        OrderHistoryDetails orderHistoryDetails = new OrderHistoryDetails(OrderId,dateOrder,timeSlot2,products,amount);
+        databaseReference.push().setValue(orderHistoryDetails);
 
 
         Intent in = new Intent(getApplicationContext(),Temp.class);

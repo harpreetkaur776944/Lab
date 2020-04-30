@@ -35,6 +35,8 @@ public class TestsDetails extends AppCompatActivity {
 
     public  static  List<CartItems> cartItemsList= new ArrayList<>();
     public static List<Test> testList = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

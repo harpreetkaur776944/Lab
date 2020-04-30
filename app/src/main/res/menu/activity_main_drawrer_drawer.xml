@@ -25,6 +25,10 @@
             android:id="@+id/nav_cart"
             android:icon="@drawable/icon_cart"
             android:title="My Cart" />
+        <item
+            android:id="@+id/nav_orderhistory"
+            android:icon="@drawable/icon_order_history"
+            android:title="OrderHistory" />
 
     </group>
 </menu>

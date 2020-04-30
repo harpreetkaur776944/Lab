@@ -44,15 +44,17 @@
             android:label="@string/title_activity_main_drawrer"
             android:theme="@style/AppTheme.NoActionBar">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
 
 
 
-        <activity android:name=".Splash" ><intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-
-        <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        <activity android:name=".Splash" ></activity>
         <activity android:name=".Payment" />
         <activity android:name=".OrderDetails" />
         <activity android:name=".CartIsEmpty" />

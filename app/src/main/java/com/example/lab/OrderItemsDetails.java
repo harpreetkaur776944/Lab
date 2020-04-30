@@ -6,7 +6,7 @@ public class OrderItemsDetails {
 
     public OrderItemsDetails(String orderId, String itemName) {
         this.orderId = orderId;
-        ItemName = itemName;
+        this.ItemName = itemName;
     }
 
     public OrderItemsDetails() {
@@ -25,6 +25,6 @@ public class OrderItemsDetails {
     }
 
     public void setItemName(String itemName) {
-        ItemName = itemName;
+        this.ItemName = itemName;
     }
 }

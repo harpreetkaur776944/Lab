@@ -48,6 +48,11 @@
         android:name="com.example.lab.ViewCartFragment"
         android:label="My Cart"
         tools:layout="@layout/fragment_view_cart" />
+    <fragment
+        android:id="@+id/nav_orderhistory"
+        android:name="com.example.lab.OrderHistoryFragment"
+        android:label="Order History"
+        tools:layout="@layout/fragment_order_history" />
 
 
 </navigation>
