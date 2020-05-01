@@ -1,5 +1,6 @@
 package com.example.lab;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hsalf.smilerating.SmileRating;
 import com.sdsmdg.tastytoast.TastyToast;
 
@@ -30,6 +33,7 @@ public class RatingsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    DatabaseReference databaseReference;
 
     public RatingsFragment() {
         // Required empty public constructor
@@ -76,7 +80,7 @@ public class RatingsFragment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(v.getContext(),mainDrawrer.class));
             }
         });
         final String[] rate = {"1"};
@@ -84,14 +88,17 @@ public class RatingsFragment extends Fragment {
             @Override
             public void onRatingSelected(int level, boolean reselected) {
                 rate[0] = level+"";
-                Toast.makeText(getActivity(),"Ratings is "+level,Toast.LENGTH_LONG).show();
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Rate is "+rate[0],Toast.LENGTH_LONG).show();
+                databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_RATINGS);
+                Toast.makeText(getActivity(),"Thanks for ratings",Toast.LENGTH_LONG).show();
                 Log.d("Rating",rate[0]);
+                RatingsDetails ratingsDetails = new RatingsDetails(Constants.completeUrl(),rate[0]);
+                databaseReference.push().setValue(ratingsDetails);
+                startActivity(new Intent(v.getContext(),mainDrawrer.class));
             }
         });
 

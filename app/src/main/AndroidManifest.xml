@@ -44,6 +44,13 @@
             android:label="@string/title_activity_main_drawrer"
             android:theme="@style/AppTheme.NoActionBar">
 
+
+
+        </activity>
+
+
+
+        <activity android:name=".Splash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,10 +58,6 @@
             </intent-filter>
 
         </activity>
-
-
-
-        <activity android:name=".Splash" ></activity>
         <activity android:name=".Payment" />
         <activity android:name=".OrderDetails" />
         <activity android:name=".CartIsEmpty" />
@@ -63,7 +66,7 @@
         <activity android:name=".TestsDetails" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Temp" />
-        <activity android:name=".Login" />
+        <activity android:name=".Login" ></activity>
 
         <meta-data
             android:name="com.razorpay.ApiKey"

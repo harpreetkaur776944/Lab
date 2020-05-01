@@ -3,8 +3,11 @@ package com.example.lab;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,13 +31,16 @@ public class TestsDetails extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     DatabaseReference databaseReference;
+    TestsAdapter myAdapter;
 
     ProgressDialog progressDialog;
     TextView viewCartSummary;
     String url = Constants.getCurrentUrl();
+    EditText search;
 
     public  static  List<CartItems> cartItemsList= new ArrayList<>();
     public static List<Test> testList = new ArrayList<>();
+
 
 
     @Override
@@ -46,6 +52,25 @@ public class TestsDetails extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         viewCartSummary = findViewById(R.id.textView20);
+        search = findViewById(R.id.editTextSearch);
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+               // filter(s.toString());
+            }
+        });
+
         cartItemsList.clear();
         testList.clear();
 
@@ -108,6 +133,19 @@ public class TestsDetails extends AppCompatActivity {
         });
 
 
+    }
+    private void filter(String text)
+    {
+        List<Test> filteredList = new ArrayList<>();
+        for(Test test : testList)
+        {
+            if(test.getName().toLowerCase().trim().contains(text.toLowerCase().trim()))
+            {
+                filteredList.add(test);
+            }
+        }
+        adapter = new TestsAdapter(getApplicationContext(),filteredList);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

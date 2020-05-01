@@ -1,6 +1,8 @@
 package com.example.lab;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
@@ -32,9 +34,12 @@ public class mainDrawrer extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView navName = (TextView) headerView.findViewById(R.id.navTextView);
-        navName.setText("Harpreet");
+        Intent in = getIntent();
+        String s = Login.LoginName;
+        navName.setText(s);
         TextView navEmail = (TextView) headerView.findViewById(R.id.navTextView2);
-        navEmail.setText("harpreet17071202@gmail.com");
+        navEmail.setText(Constants.completeUrl());
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(

@@ -111,9 +111,15 @@ public class MainActivity extends AppCompatActivity {
             email.requestFocus();
             return;
         }
-        if(pass.length()<6)
+        if(pass.length()<8)
         {
-            password.setError("Minimum length must be 6");
+            password.setError("8 characters are must");
+            password.requestFocus();
+            return;
+        }
+        if(!containsDigitUpper(pass))
+        {
+            password.setError("One Digit and UpperCase is must");
             password.requestFocus();
             return;
         }
@@ -159,5 +165,21 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public boolean containsDigitUpper(String s) {
+        boolean containsDigit = false;
+        boolean containsUpper = false;
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c)) {
+                containsDigit = true;
+            }
+            if(Character.isUpperCase(c)) {
+                containsUpper=true;
+            }
+        }
+        if(containsDigit && containsUpper)
+            return true;
+        else
+            return false;
     }
 }

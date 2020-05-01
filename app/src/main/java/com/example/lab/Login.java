@@ -3,6 +3,7 @@ package com.example.lab;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -33,6 +34,7 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
+    public static String LoginName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +135,7 @@ public class Login extends AppCompatActivity {
         }
 
 
+
         progressBar.setVisibility(View.VISIBLE);
         firebaseAuth.signInWithEmailAndPassword(username,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -156,7 +159,9 @@ public class Login extends AppCompatActivity {
                                 }
                                 progressBar.setVisibility(View.GONE);
                                 Intent in = new Intent(getApplicationContext(),mainDrawrer.class);
-                                in.putExtra("Name",name);
+                                LoginName = name;
+                                //in.putExtra("Name",name);
+                               // Log.d("SLS",name);
                                 startActivity(in);
                             }
 
@@ -183,4 +188,5 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
 }

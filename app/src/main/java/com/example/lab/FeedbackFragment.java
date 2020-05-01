@@ -1,6 +1,7 @@
 package com.example.lab;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Calendar;
 
 
@@ -36,6 +40,7 @@ public class FeedbackFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    DatabaseReference databaseReference;
 
     public FeedbackFragment() {
         // Required empty public constructor
@@ -94,14 +99,14 @@ public class FeedbackFragment extends Fragment {
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
-                final int day = calendar.get(Calendar.DAY_OF_MONTH);
+                final int days = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog datePicker = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        textView.setText(day + "/" + month + "/" + year);
+                        textView.setText(dayOfMonth + "/" + month + "/" + year);
 
                     }
-                }, year, month, day);
+                }, year, month, days);
                 datePicker.show();
             }
         });
@@ -146,7 +151,26 @@ public class FeedbackFragment extends Fragment {
                 }
                 if(!flagQues1 && !flagQues2 && !flagDate && !flagCity)
                 {
+                    String url = Constants.completeUrl();
+                    String city = spinner.getSelectedItem().toString().trim();
+                    String date = textView.getText().toString().trim();
+                    String fname = name.getText().toString().trim();
+                    String fcontact = contact.getText().toString().trim();
+                    String q1 = "";
+                    if(ques1No.isChecked())
+                        q1="No" ;
+                    else if(ques1Yes.isChecked())
+                        q1="Yes";
+                    String q2 = "";
+                    if(ques2No.isChecked())
+                        q2="No";
+                    else if(ques2Yes.isChecked())
+                        q2="Yes";
+                    databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_FEEDBACK);
+                    FeedbackDetails feedbackDetails = new FeedbackDetails(url,city,date,fname,fcontact,q1,q2);
+                    databaseReference.push().setValue(feedbackDetails);
                     Toast.makeText(view.getContext(),"Thanks for the feedback",Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(v.getContext(),mainDrawrer.class));
                 }
             }
         });
