@@ -110,18 +110,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
+                <ImageView
                     android:id="@+id/buttonDate"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/round_button"
-                    android:backgroundTint="@color/myColor"
-                    android:text="Select Date "
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="#FFFFFF"
+                    android:tint="@color/myColor"
+                    app:srcCompat="@drawable/icon_calendar" />
 
                 <TextView
                     android:id="@+id/textViewDate"
@@ -196,7 +191,6 @@
                 android:background="@drawable/round_button"
                 android:backgroundTint="@color/myColor"
                 android:text="Proceed To Pay"
-                android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 

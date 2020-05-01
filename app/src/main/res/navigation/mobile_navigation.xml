@@ -54,5 +54,9 @@
         android:label="Order History"
         tools:layout="@layout/fragment_order_history" />
 
-
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.example.lab.LogoutFragment"
+        android:label="Logout"
+        tools:layout="@layout/fragment_logout" />
 </navigation>

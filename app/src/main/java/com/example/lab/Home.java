@@ -15,7 +15,7 @@ public class Home extends Application {
 
         if(firebaseUser!=null && firebaseUser.isEmailVerified())
         {
-            Intent in = new Intent(getApplicationContext(),Temp.class);
+            Intent in = new Intent(getApplicationContext(),mainDrawrer.class);
             startActivity(in);
         }
     }

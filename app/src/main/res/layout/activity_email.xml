@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EmailActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="Email"
+        app:titleMarginStart="30dp"
+        app:titleTextColor="@android:color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="false"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        android:verticalScrollbarPosition="right">
+
+        <TextView
+        android:id="@+id/textViewTo"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:fontFamily="@font/basic"
+        android:text="To:"
+        android:textColor="@color/myColor"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/editTextTo"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:fontFamily="@font/basic"
+        android:hint="Recipient"
+        android:inputType="textEmailAddress"
+        android:text="itestlabproject@gmail.com"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewSubject"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/basic"
+        android:text="Subject:"
+        android:textColor="@color/myColor"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/editTextSubject"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:hint="Subject"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/textViewMessage"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/basic"
+        android:text="Message:"
+        android:textColor="@color/myColor"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/editTextMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Write your message here..."
+        android:inputType="textMultiLine"
+        android:lines="10" />
+
+    <Button
+        android:id="@+id/buttonSendEmail"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/myColor"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="Send"
+        android:textColor="@android:color/white" /></LinearLayout>
+</LinearLayout>

@@ -3,6 +3,7 @@ package com.example.lab;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
@@ -10,7 +11,9 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -34,7 +37,6 @@ public class mainDrawrer extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView navName = (TextView) headerView.findViewById(R.id.navTextView);
-        Intent in = getIntent();
         String s = Login.LoginName;
         navName.setText(s);
         TextView navEmail = (TextView) headerView.findViewById(R.id.navTextView2);
@@ -43,7 +45,7 @@ public class mainDrawrer extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,R.id.nav_rateus,R.id.nav_feedback,R.id.nav_contactus,R.id.nav_cart,R.id.nav_orderhistory)
+                R.id.nav_home,R.id.nav_rateus,R.id.nav_feedback,R.id.nav_contactus,R.id.nav_cart,R.id.nav_orderhistory,R.id.nav_logout)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -68,6 +70,11 @@ public class mainDrawrer extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+    }
 }

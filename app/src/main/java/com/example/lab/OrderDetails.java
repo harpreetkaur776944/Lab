@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -44,7 +45,8 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
     EditText name,phone,pincode,houseNo,street,landmark;
     TextView date,time,error;
     Spinner selectcity,selectState;
-    Button selectDate,confirm;
+    Button confirm;
+    ImageView selectDate;
     Calendar calendar;
     String[] city = {"Select City","Patiala","Nabha","Rajpura","Sanaur","Nabha"};
     String[] state= {"Select State","Punjab"};
@@ -302,7 +304,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
         databaseReference.push().setValue(orderHistoryDetails);
 
 
-        Intent in = new Intent(getApplicationContext(),Temp.class);
+        Intent in = new Intent(getApplicationContext(),mainDrawrer.class);
         startActivity(in);
         Toast.makeText(getApplicationContext(),"Order placed",Toast.LENGTH_LONG).show();
     }

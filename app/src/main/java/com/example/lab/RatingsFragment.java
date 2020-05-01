@@ -104,4 +104,5 @@ public class RatingsFragment extends Fragment {
 
         return view;
     }
+
 }

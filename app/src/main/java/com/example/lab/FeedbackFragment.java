@@ -88,7 +88,7 @@ public class FeedbackFragment extends Fragment {
         final RadioButton ques2No = view.findViewById(R.id.radioButton10);
         final TextView textView = view.findViewById(R.id.textView28);
         Button submit = view.findViewById(R.id.buttonSubmit2);
-        textView.setText("Select Home Collection Date");
+        textView.setText("Select Sample Collection Date");
 
         String[] cities = {"Select city", "Patiala", "Nabha", "Rajpura", "Sanaur", "Samana", "Nabha"};
         ArrayAdapter adp = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, cities);
