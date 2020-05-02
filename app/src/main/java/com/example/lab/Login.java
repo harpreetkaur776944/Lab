@@ -35,6 +35,7 @@ public class Login extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
     public static String LoginName="";
+    public static boolean FLAG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,9 +161,10 @@ public class Login extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 Intent in = new Intent(getApplicationContext(),mainDrawrer.class);
                                 LoginName = name;
-                                //in.putExtra("Name",name);
-                               // Log.d("SLS",name);
+                                FLAG = true;
                                 startActivity(in);
+
+                                finish();
                             }
 
                             @Override

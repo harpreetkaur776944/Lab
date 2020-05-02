@@ -12,6 +12,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import javax.security.auth.login.LoginException;
+
 public class Splash extends AppCompatActivity {
 
     private  static  int SLASH_SCREEN = 5000;
@@ -35,9 +37,17 @@ public class Splash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent in = new Intent(getApplicationContext(),Login.class);
-                startActivity(in);
-                finish();
+                if(Login.FLAG==true)
+                {
+                    Intent in = new Intent(getApplicationContext(), mainDrawrer.class);
+                    startActivity(in);
+                    finish();
+                }
+                else {
+                    Intent in = new Intent(getApplicationContext(), Login.class);
+                    startActivity(in);
+                    finish();
+                }
             }
         },SLASH_SCREEN);
 
