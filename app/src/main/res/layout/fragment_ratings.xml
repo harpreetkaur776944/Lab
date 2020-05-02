@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RatingsFragment">
+    tools:context="com.example.lab.RatingsFragment">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/imageView7"

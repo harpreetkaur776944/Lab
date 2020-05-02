@@ -3,7 +3,9 @@ package com.example.lab;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,13 @@ public class LogoutFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static boolean FLAG2 =false;
+
+    @NonNull
+    @Override
+    public ViewModelProvider.Factory getDefaultViewModelProviderFactory() {
+        return super.getDefaultViewModelProviderFactory();
+    }
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -70,9 +79,10 @@ public class LogoutFragment extends Fragment {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getActivity(), Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        FLAG2 = true;
         startActivity(intent);
 
-        
+        getActivity().finishAffinity();
         return view;
     }
 }

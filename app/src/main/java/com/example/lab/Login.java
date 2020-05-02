@@ -3,7 +3,6 @@ package com.example.lab;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -35,6 +34,7 @@ public class Login extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
     public static String LoginName="";
+    public static String LoginId ="";
     public static boolean FLAG = false;
 
     @Override
@@ -92,6 +92,7 @@ public class Login extends AppCompatActivity {
                             }
                             else
                             {
+                                progressBar.setVisibility(View.GONE);
                                 Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_LONG).show();
                             }
                         }
@@ -153,14 +154,18 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 String name ="";
+                                String id="";
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                     LoginDetails loginDetails = ds.getValue(LoginDetails.class);
-                                    if(loginDetails.Username.equals(username) && loginDetails.Password.equals(pass))
+                                    if(loginDetails.Username.equals(username) && loginDetails.Password.equals(pass)) {
                                         name = loginDetails.Name;
+                                        id=loginDetails.Username;
+                                    }
                                 }
                                 progressBar.setVisibility(View.GONE);
                                 Intent in = new Intent(getApplicationContext(),mainDrawrer.class);
                                 LoginName = name;
+                                LoginId = id;
                                 FLAG = true;
                                 startActivity(in);
 
@@ -191,4 +196,12 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if(LogoutFragment.FLAG2==true) {
+            finish();
+        }
+        finish();
+    }
 }

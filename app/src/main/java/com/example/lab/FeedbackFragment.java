@@ -15,7 +15,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -151,7 +150,7 @@ public class FeedbackFragment extends Fragment {
                 }
                 if(!flagQues1 && !flagQues2 && !flagDate && !flagCity)
                 {
-                    String url = Constants.completeUrl();
+                    String url = Login.LoginId;
                     String city = spinner.getSelectedItem().toString().trim();
                     String date = textView.getText().toString().trim();
                     String fname = name.getText().toString().trim();

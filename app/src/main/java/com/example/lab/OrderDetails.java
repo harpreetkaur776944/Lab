@@ -7,10 +7,8 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -33,11 +31,8 @@ import com.razorpay.PaymentResultListener;
 
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class OrderDetails extends AppCompatActivity implements PaymentResultListener {
@@ -368,6 +363,11 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
                 else
                 {c="false"; }
                 Log.d("DT",c+"hello");
+                radioGroup.clearCheck();
+                r1.setEnabled(true);
+                r2.setEnabled(true);
+                r3.setEnabled(true);
+                r4.setEnabled(true);
 
                 if(checkList.size()==4 || (tempDate.equals(date) && hour>=16) )
                 {

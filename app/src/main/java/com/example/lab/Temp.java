@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,7 +18,7 @@ public class Temp extends AppCompatActivity {
     TextView tv1,tv2;
 
     Button b;
-    EditText name,details,preTestInfo,reportAvailable,testUsuage,category,price,testCode;
+    EditText name,details,preTestInfo,reportAvailable,testUsuage,category,price,testCode,offer,type;
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference;
@@ -46,7 +47,10 @@ public class Temp extends AppCompatActivity {
                 category = findViewById(R.id.editText7);
                 price = findViewById(R.id.editText8);
                 testCode = findViewById(R.id.editTextFeedName);
-               /* databaseReference = FirebaseDatabase.getInstance().getReference("TestDetails");
+                offer = findViewById(R.id.editTextOffEr);
+                type = findViewById(R.id.editTextTyPE);
+
+               databaseReference = FirebaseDatabase.getInstance().getReference("TestDetails");
 
                // databaseReference = firebaseDatabase.getReference();
                 String Name = name.getText().toString().trim();
@@ -57,8 +61,10 @@ public class Temp extends AppCompatActivity {
                 String Category = category.getText().toString().trim();
                 String Price = price.getText().toString().trim();
                 String TestCode = testCode.getText().toString().trim();
+                String Offer = offer.getText().toString().trim();
+                String Type = type.getText().toString().trim();
 
-                Test test = new Test(TestCode,Name,Details,PreTestInfo,ReportAvailable,TestUsuage,Category,Price);
+                Test test = new Test(TestCode,Name,Details,PreTestInfo,ReportAvailable,TestUsuage,Category,Price,Type,Offer);
                 databaseReference.child("TestDetails").push().setValue(test);
                 name.setText("");
                 testCode.setText("");
@@ -68,11 +74,12 @@ public class Temp extends AppCompatActivity {
                 testUsuage.setText("");
                 category.setText("");
                 price.setText("");
+                offer.setText("");
+                type.setText("");
                 Toast.makeText(getApplicationContext(),"Data added ",Toast.LENGTH_LONG).show();
-*/
 
-                Intent in = new Intent(getApplicationContext(),TestsDetails.class);
-                startActivity(in);
+
+
             }
         });
 

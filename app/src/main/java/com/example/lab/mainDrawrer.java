@@ -1,19 +1,12 @@
 package com.example.lab;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
-import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -38,9 +31,10 @@ public class mainDrawrer extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         TextView navName = (TextView) headerView.findViewById(R.id.navTextView);
         String s = Login.LoginName;
+        String s2 = Login.LoginId;
         navName.setText(s);
         TextView navEmail = (TextView) headerView.findViewById(R.id.navTextView2);
-        navEmail.setText(Constants.completeUrl());
+        navEmail.setText(s2);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -69,7 +63,6 @@ public class mainDrawrer extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
 
 
 }

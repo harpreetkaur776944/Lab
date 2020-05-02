@@ -3,7 +3,6 @@ package com.example.lab;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -12,11 +11,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import javax.security.auth.login.LoginException;
-
 public class Splash extends AppCompatActivity {
 
-    private  static  int SLASH_SCREEN = 5000;
+    private  static  int SLASH_SCREEN = 4000;
     Animation  topAnim , bottomAnim;
     ImageView imageView;
     TextView textView;

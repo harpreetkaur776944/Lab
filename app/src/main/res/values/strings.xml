@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lab</string>
+    <string name="app_name">iTestLabs</string>
     <string name="RS">\u20B9</string>
     <string name="select_the_date"><![CDATA[<-- Select the Date]]></string>
     <string name="select_the_time"><![CDATA[<-- Select the Time]]></string>

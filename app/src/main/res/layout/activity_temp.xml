@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Temp">
+    tools:context="com.example.lab.Temp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,6 +91,22 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="price"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editTextOffEr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="offer"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editTextTyPE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="type"
             android:inputType="textPersonName" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

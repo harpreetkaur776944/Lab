@@ -3,8 +3,6 @@ package com.example.lab;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class ViewCartSummaryAdapter extends RecyclerView.Adapter<ViewCartSummaryAdapter.ViewHolder> {
