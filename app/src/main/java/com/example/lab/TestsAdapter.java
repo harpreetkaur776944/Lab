@@ -53,7 +53,7 @@ public class TestsAdapter extends RecyclerView.Adapter<TestsAdapter.ViewHolder>{
     public int getItemCount() {
         return testList.size();
     }
-    public  void filterList(List<Test> filteredList)
+    public void filterList(List<Test> filteredList)
     {
         testList = filteredList;
         notifyDataSetChanged();

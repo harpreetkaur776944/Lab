@@ -53,7 +53,6 @@
         <activity android:name=".Splash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -65,7 +64,9 @@
         <activity android:name=".SelectTestCart" />
         <activity android:name=".TestsDetails" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Temp" />
+        <activity android:name=".Temp">
+
+        </activity>
         <activity android:name=".Login" ></activity>
 
         <meta-data
