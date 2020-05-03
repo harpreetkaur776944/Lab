@@ -54,6 +54,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
     String amount;
     List<CartItems> cartList;
     public static String products="" ;
+    public static String[] mon ={"JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
 
 
     @Override
@@ -144,7 +145,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
                 DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String DateOrder = day+"/"+month+"/"+year;
+                        String DateOrder = day+"/"+mon[month]+"/"+year;
                         checkIfDateAvilable(DateOrder);
                         date.setText(DateOrder);
                         radioGroup.setVisibility(View.VISIBLE);

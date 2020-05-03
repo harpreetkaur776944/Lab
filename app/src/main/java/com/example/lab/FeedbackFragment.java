@@ -104,7 +104,7 @@ public class FeedbackFragment extends Fragment {
                 DatePickerDialog datePicker = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        textView.setText(dayOfMonth + "/" + month + "/" + year);
+                        textView.setText(dayOfMonth + "/" + OrderDetails.mon[month] + "/" + year);
 
                     }
                 }, year, month, days);
