@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,7 @@ public class FeedbackFragment extends Fragment {
         final TextView textView = view.findViewById(R.id.textView28);
         Button submit = view.findViewById(R.id.buttonSubmit2);
         textView.setText("Select Sample Collection Date");
+        contact.setFilters(new InputFilter[] {new InputFilter.LengthFilter(10)});
 
         String[] cities = {"Select city", "Patiala", "Nabha", "Rajpura", "Sanaur", "Samana", "Nabha"};
         ArrayAdapter adp = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_dropdown_item, cities);

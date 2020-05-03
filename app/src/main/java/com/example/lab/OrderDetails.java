@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -81,6 +82,8 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
         r4 = findViewById(R.id.radioButton4);
         error = findViewById(R.id.textViewError);
 
+        phone.setFilters(new InputFilter[] {new InputFilter.LengthFilter(10)});
+        pincode.setFilters(new InputFilter[] {new InputFilter.LengthFilter(10)});
 
         radioGroup.clearCheck();
         radioGroup.setVisibility(View.GONE);
