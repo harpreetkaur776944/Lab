@@ -55,6 +55,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
     List<CartItems> cartList;
     public static String products="" ;
     public static String[] mon ={"JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
+    //private static List<TimeSlot> checkList = new ArrayList<>();
 
 
     @Override
@@ -336,75 +337,75 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
 
     private void checkIfDateAvilable(final String date)
     {
-        final List<TimeSlot> checkList = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_TIMESLOT);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+
+       DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_TIMESLOT);
+        databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<TimeSlot> checkList = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                   TimeSlot timeSlot = ds.getValue(TimeSlot.class);
-                   if(timeSlot.date.equals(date))
-                   {
-                       checkList.add(timeSlot);
-                       Log.d("CHECK DATE",timeSlot.getDate());
-                   }
-                }
-
-
-                calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-
-                String tempDate = dayOfMonth+"/"+month+"/"+year;
-                Log.d("Date",tempDate);
-                Log.d("Hour",hour+"");
-                Log.d("Date Here",date+"u");
-                String c;
-                if(tempDate.trim().equals(date.trim()))
-                {c="true"; }
-                else
-                {c="false"; }
-                Log.d("DT",c+"hello");
-                radioGroup.clearCheck();
-                r1.setEnabled(true);
-                r2.setEnabled(true);
-                r3.setEnabled(true);
-                r4.setEnabled(true);
-
-                if(checkList.size()==4 || (tempDate.equals(date) && hour>=16) )
-                {
-                    time.setText("No Booking Avaliable for this date select another");
-                    radioGroup.setVisibility(View.GONE);
-                }
-                else {
-                    radioGroup.setVisibility(View.VISIBLE);
-                    time.setText("Select the Time Slot");
-
-                    if (tempDate.equals(date)&&hour>=16)
-                        r4.setEnabled(false);
-                    if (tempDate.equals(date)&&hour>=14)
-                        r3.setEnabled(false);
-                    if (tempDate.equals(date)&&hour>=12)
-                        r2.setEnabled(false);
-                    if (tempDate.equals(date)&&hour>=9)
-                        r1.setEnabled(false);
-
-
-                    for (TimeSlot timeslot : checkList) {
-
-                        if (timeslot.getTime().equals(Constants.TIME_SLOT_FOURTH))
-                            r4.setEnabled(false);
-                        if (timeslot.getTime().equals(Constants.TIME_SLOT_THIRD))
-                            r3.setEnabled(false);
-                        if (timeslot.getTime().equals(Constants.TIME_SLOT_SECOND))
-                            r2.setEnabled(false);
-                        if (timeslot.getTime().equals(Constants.TIME_SLOT_FIRST))
-                            r1.setEnabled(false);
-
+                    TimeSlot timeSlot = ds.getValue(TimeSlot.class);
+                    if (timeSlot.getDate().equals(date)) {
+                        Log.d("CHECK DATE", timeSlot.getDate() + "Heredate is");
+                        checkList.add(timeSlot);
                     }
                 }
+
+                    calendar = Calendar.getInstance();
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH);
+                    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+
+                    String tempDate = dayOfMonth + "/" + mon[month] + "/" + year;
+                    Log.d("Date", tempDate);
+                    Log.d("Hour", hour + "");
+                    Log.d("Date Here", date);
+                    String c;
+                    if (tempDate.trim().equals(date.trim())) {
+                        c = "true";
+                    } else {
+                        c = "false";
+                    }
+                    Log.d("DT", c + "hello");
+                    radioGroup.clearCheck();
+                    r1.setEnabled(true);
+                    r2.setEnabled(true);
+                    r3.setEnabled(true);
+                    r4.setEnabled(true);
+
+                    if (checkList.size() == 4 || (tempDate.equals(date) && hour >= 16)) {
+                        time.setText("No Booking Avaliable for this date select another");
+                        radioGroup.setVisibility(View.GONE);
+                    } else {
+                        radioGroup.setVisibility(View.VISIBLE);
+                        time.setText("Select the Time Slot");
+
+                        if (tempDate.equals(date) && hour >= 16)
+                            r4.setEnabled(false);
+                        if (tempDate.equals(date) && hour >= 14)
+                            r3.setEnabled(false);
+                        if (tempDate.equals(date) && hour >= 12)
+                            r2.setEnabled(false);
+                        if (tempDate.equals(date) && hour >= 9)
+                            r1.setEnabled(false);
+
+
+                        for (TimeSlot timeslot : checkList) {
+
+                            if (timeslot.getTime().equals(Constants.TIME_SLOT_FOURTH))
+                                r4.setEnabled(false);
+                            if (timeslot.getTime().equals(Constants.TIME_SLOT_THIRD))
+                                r3.setEnabled(false);
+                            if (timeslot.getTime().equals(Constants.TIME_SLOT_SECOND))
+                                r2.setEnabled(false);
+                            if (timeslot.getTime().equals(Constants.TIME_SLOT_FIRST))
+                                r1.setEnabled(false);
+
+                        }
+                    }
+
             }
 
             @Override

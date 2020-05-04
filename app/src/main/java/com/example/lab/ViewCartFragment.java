@@ -123,6 +123,7 @@ public class ViewCartFragment extends Fragment {
                     Log.d("TEST CHECK","Empty");
                     Intent in = new Intent(getActivity(),CartIsEmpty.class);
                     startActivity(in);
+                    getActivity().finish();
                 }
 
                 adapter = new ViewCartSummaryAdapter(getActivity(), cartList);

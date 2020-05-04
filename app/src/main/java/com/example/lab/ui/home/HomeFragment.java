@@ -74,4 +74,6 @@ public class HomeFragment extends Fragment {
         viewFlipper.setOutAnimation(this.getContext(), android.R.anim.slide_out_right);
     }
 
+
+
 }
