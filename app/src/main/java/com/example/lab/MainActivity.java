@@ -143,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                                 name.setText("");
                                 email.setText("");
                                 password.setText("");
+                                Intent in = new Intent(getApplicationContext(),Login.class);
+                                startActivity(in);
                             }
                             else
                             {

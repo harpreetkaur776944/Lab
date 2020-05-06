@@ -85,7 +85,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
         error = findViewById(R.id.textViewError);
 
         phone.setFilters(new InputFilter[] {new InputFilter.LengthFilter(10)});
-        pincode.setFilters(new InputFilter[] {new InputFilter.LengthFilter(10)});
+        pincode.setFilters(new InputFilter[] {new InputFilter.LengthFilter(6)});
 
         radioGroup.clearCheck();
         radioGroup.setVisibility(View.GONE);
@@ -212,12 +212,7 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
             pincode.requestFocus();
             return;
         }
-        if(Landmark.isEmpty())
-        {
-            landmark.setError("Landmark is required");
-            landmark.requestFocus();
-            return;
-        }
+
 
         if(HouseNo.isEmpty())
         {
