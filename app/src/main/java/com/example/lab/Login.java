@@ -200,6 +200,8 @@ public class Login extends AppCompatActivity {
     public void onBackPressed() {
 
         if(LogoutFragment.FLAG2==true) {
+            LogoutFragment.FLAG2=false;
+            Login.FLAG=false;
             finish();
         }
         finish();

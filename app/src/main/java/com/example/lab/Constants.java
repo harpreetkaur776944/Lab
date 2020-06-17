@@ -16,6 +16,7 @@ public class Constants {
     public static final String TIME_SLOT_SECOND ="12:00pm - 1:00pm";
     public static final String TIME_SLOT_THIRD ="2:00pm - 4:00pm";
     public static final String TIME_SLOT_FOURTH ="5:00pm - 7:00pm";
+    public static boolean FLAG_LOGOUT = false;
 
 
     public static String getCurrentUrl()

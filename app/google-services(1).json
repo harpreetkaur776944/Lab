@@ -8,43 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:176590174633:android:29be2d1fe4faeb288aacb8",
-        "android_client_info": {
-          "package_name": "com.example.lab"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "176590174633-74do6borld3d4219v9b70p2muau08vbp.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.lab",
-            "certificate_hash": "e535f324d4367f49371165174c2b9fe8be02081a"
-          }
-        },
-        {
-          "client_id": "176590174633-vh9kqqs0tnfbnj7ru3c0h17m7o6hdkgo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAPaR3PYk8WVc5rFM4XYPrB6pjVZNQMeew"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "176590174633-vh9kqqs0tnfbnj7ru3c0h17m7o6hdkgo.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:176590174633:android:6b3c0e210ee4a05e8aacb8",
         "android_client_info": {
           "package_name": "com.exmaple.lab"

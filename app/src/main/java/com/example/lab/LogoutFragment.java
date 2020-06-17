@@ -83,6 +83,7 @@ public class LogoutFragment extends Fragment {
         startActivity(intent);
 
         getActivity().finishAffinity();
+        //Constants.FLAG_LOGOUT=true;
         return view;
     }
 }

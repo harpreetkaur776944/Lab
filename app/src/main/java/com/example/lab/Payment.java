@@ -50,16 +50,6 @@ public class Payment extends AppCompatActivity implements PaymentResultListener 
             //   options.put("order_id", "order_9A33XWu170gUtm");
             options.put("currency", "INR");
             options.put("amount", "100");
-
-            /*
-            JSONObject preFill = new JSONObject();
-            preFill.put("email", "harpreet17071202@gmail.com");
-            preFill.put("contact", "7973718410");
-
-            options.put("prefill", preFill);
-
-             */
-
             checkout.open(activity, options);
 
         } catch(Exception e) {

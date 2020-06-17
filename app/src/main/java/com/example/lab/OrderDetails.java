@@ -292,12 +292,9 @@ public class OrderDetails extends AppCompatActivity implements PaymentResultList
             databaseReference.child(OrderId).push().setValue(orderItemsDetails);
         }
 
-
-
         databaseReference = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_ORDER_HISTORY).child(Constants.getCurrentUrl());
         OrderHistoryDetails orderHistoryDetails = new OrderHistoryDetails(OrderId,dateOrder,timeSlot2,products,amount);
         databaseReference.push().setValue(orderHistoryDetails);
-
 
         Intent in = new Intent(getApplicationContext(),mainDrawrer.class);
         startActivity(in);
